@@ -1,42 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>My Personal Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<h1 class="title">Parker's Portfolio<span style="font-weight: 900">*</span></h1>
+<h1 class="title">Parker's Portfolio<span style="font-weight:900">*</span></h1>
+
 <main>
   <div class="gallery">
     <figure class="vinyl">
       <a href="index2.html">
-        <img src="Blue Vinyl.png" alt="Wolf vinyl"/>
+        <img src="Blue Vinyl.png" alt="Wolf vinyl" />
       </a>
-      <figcaption>Projects</figcaption>
+      <figcaption class="sr-only">Projects</figcaption>
+      <svg class="caption-ring" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <path id="ring-projects" d="M130,130 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0"/>
+        </defs>
+        <text>
+          <!-- Top position -->
+          <textPath href="#ring-projects" startOffset="25%" text-anchor="middle">Projects</textPath>
+        </text>
+      </svg>
     </figure>
 
     <figure class="vinyl">
       <a href="index3.html">
-        <img src="Green Vinyl.png" alt="Igor vinyl"/>
+        <img src="Green Vinyl.png" alt="Igor vinyl" />
       </a>
-      <figcaption>Info</figcaption>
+      <figcaption class="sr-only">Info</figcaption>
+      <svg class="caption-ring" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <path id="ring-info" d="M130,130 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0"/>
+        </defs>
+        <text>
+          <!-- Top position -->
+          <textPath href="#ring-info" startOffset="25%" text-anchor="middle">Info</textPath>
+        </text>
+      </svg>
     </figure>
 
     <figure class="vinyl">
       <a href="index4.html">
-        <img src="Pink Vinyl.png" alt="Goblin vinyl"/>
+        <img src="Pink Vinyl.png" alt="Goblin vinyl" />
       </a>
-      <figcaption>Contact</figcaption>
+      <figcaption class="sr-only">Contact</figcaption>
+      <svg class="caption-ring" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <path id="ring-contact" d="M130,130 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0"/>
+        </defs>
+        <text>
+          <!-- Top position -->
+          <textPath href="#ring-contact" startOffset="25%" text-anchor="middle">Contact</textPath>
+        </text>
+      </svg>
     </figure>
 
     <figure class="vinyl">
       <a href="index5.html">
-        <img src="Flower Vinyl.png" alt="Chromakopia vinyl"/>
+        <img src="Flower Vinyl.png" alt="Chromakopia vinyl" />
       </a>
-      <figcaption>Copycat</figcaption>
+      <figcaption class="sr-only">Copycat</figcaption>
+      <svg class="caption-ring" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <path id="ring-copycat" d="M130,130 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0"/>
+        </defs>
+        <text>
+          <!-- Top position -->
+          <textPath href="#ring-copycat" startOffset="25%" text-anchor="middle">Copycat</textPath>
+        </text>
+      </svg>
     </figure>
   </div>
 </main>
@@ -56,9 +92,7 @@
   </div>
 </div>
 
-<img class="dog" src="Sweater Dog Png.png" alt="Sweater Dog">
-
+<img class="dog" src="Sweater Dog Png.png" alt="Sweater Dog" />
 <script src="index1.js"></script>
 </body>
-
 </html>

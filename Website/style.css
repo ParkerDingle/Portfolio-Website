@@ -6,7 +6,8 @@
   font-style: normal;
 }
 
-* { background-color: beige; }
+/* was: * { background-color: beige; } */
+html, body { background-color: beige; }
 
 body {
   margin: 0;
@@ -22,7 +23,7 @@ h1 {
   text-align: center;
   padding: 10px;
   font-weight: 300;
-  color: rgb(48, 37, 23);
+  color: rgb(48, 37, 23)
 }
 
 main {
@@ -40,23 +41,58 @@ main {
   transform: translateY(-50%);
 }
 
-.vinyl { display: flex; flex-direction: column; align-items: center; }
+.vinyl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* for ring overlay */
+}
 
 .vinyl img {
   width: 200px;
   height: 200px;
   object-fit: cover;
   border-radius: 50%;
+  position: relative;
+  z-index: 1; /* ensure above page background */
 }
 
-.vinyl figcaption {
-  margin-top: 8px;
-  font-size: 20px;
-  color: #333;
-  text-align: center;
+/* hide original caption but keep for screen readers */
+.vinyl figcaption.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* circular caption ring overlay — prevent text clipping */
+.caption-ring {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 260px; height: 260px;        /* extra gutter to avoid cutoffs */
+  transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+  background: transparent;            /* critical: don't cover the image */
+}
+.caption-ring text {
+  fill: rgb(48, 37, 23);
+  font-size: 18px;
+  letter-spacing: 1px;
+  dominant-baseline: middle;
 }
 
+/* also keep all SVG backgrounds transparent */
+svg { background: transparent; }
+
+/* spin on hover */
+.vinyl:hover .caption-ring {
+  animation: caption-spin 6s linear infinite;
+}
+@keyframes caption-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* bottom bar + single-line ticker */
 .solid-bar {
   position: relative;
   width: 100%;
@@ -70,18 +106,17 @@ main {
 }
 
 .ticker {
-  position: relative;       
-  height: 100%;             
+  position: relative;
+  height: 100%;
   width: 100%;
-  overflow: hidden;         
+  overflow: hidden;
   background: rgb(48, 37, 23);
   display: block;
 }
 
 .track {
-  position: absolute;        
-  top: 0;
-  left: 0;
+  position: absolute;
+  top: 0; left: 0;
   display: flex;
   flex-direction: column;
   will-change: transform;
@@ -90,7 +125,7 @@ main {
 
 .item {
   font-size: 1.5rem;
-  height: 75px;             
+  height: 75px;
   display: flex;
   align-items: center;
   padding: 0;
@@ -103,14 +138,15 @@ main {
   box-shadow: none;
 }
 
+/* dog on the bar, centered, small */
 .dog {
-   position: absolute;       
-  left: 50%;                
-  top: 95%;                 
+  position: absolute;
+  left: 50%;
+  top: 95%;
   transform: translate(-50%, -50%);
-  height: 10%;              
-  width: auto;              
+  height: 10%;
+  width: auto;
   z-index: 1;
-  pointer-events: none;      
-  background: transparent;   
+  pointer-events: none;
+  background: transparent;
 }
