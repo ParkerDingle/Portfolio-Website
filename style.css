@@ -1,0 +1,180 @@
+:root {
+  /* UPDATED: Changed to Beige */
+  --bg-color: beige; 
+  --text-dark: rgb(48, 37, 23); /* Brown */
+  --text-light: rgb(145, 225, 252); /* Light Blue */
+  --bar-height: 75px;
+  
+  /* Fonts */
+  --font-title: "Shrikhand", cursive; 
+  --font-body: sans-serif; 
+}
+
+/* --- GLOBAL RESET & LAYOUT --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevents scrollbars for the app-like feel */
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Typography --- */
+h1 {
+  font-family: var(--font-title);
+  /* Fluid sizing: scales between 3rem and 8rem based on screen width */
+  font-size: clamp(3rem, 8vw, 8rem);
+  text-align: center;
+  padding: 20px 10px;
+  margin: 0;
+  font-weight: 400; /* Shrikhand is bold by default */
+  letter-spacing: 2px;
+}
+
+h1 span {
+  color: #ff6b6b; /* Subtle red pop for the asterisk */
+}
+
+/* --- Main Layout --- */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+}
+
+/* --- Vinyl Items --- */
+.vinyl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  width: 260px;
+  height: 260px;
+}
+
+.vinyl img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+}
+
+.vinyl:hover img {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* --- Rotating Text Ring (Smooth Rewind) --- */
+.caption-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+
+  /* STATE: Not Hovering */
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.caption-ring text {
+  fill: var(--text-dark);
+  font-family: var(--font-title);
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* STATE: Hovering */
+.vinyl:hover .caption-ring {
+  transform: rotate(1turn); 
+  transition: transform 10s linear;
+}
+
+/* --- Footer & Ticker --- */
+.solid-bar {
+  position: relative; /* Essential for positioning the dog */
+  width: 100%;
+  height: var(--bar-height);
+  background-color: var(--text-dark);
+  color: var(--text-light);
+  margin-top: auto;
+}
+
+.ticker {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1); 
+}
+
+/* Helper class for the JS infinite loop snap */
+.track.no-transition {
+  transition: none !important;
+}
+
+.item {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1.2rem;
+  height: var(--bar-height);
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  white-space: nowrap;
+}
+
+/* --- The Dog --- */
+.dog {
+  position: absolute;
+  top: 0; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 120px; 
+  width: auto;
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+}
+
+a { 
+  text-decoration: none; 
+  color: inherit; 
+}

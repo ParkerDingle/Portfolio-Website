@@ -1,0 +1,206 @@
+:root {
+  /* Fallback color if image doesn't load */
+  --bg-color: #ffe6eb; 
+  --text-dark: rgb(48, 37, 23); /* Brown */
+  --text-light: rgb(145, 225, 252); /* Light Blue */
+  
+  /* FONTS */
+  --font-title: "Shrikhand", cursive; 
+  --font-body: 'Courier New', monospace; 
+}
+
+/* --- GLOBAL RESET --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; 
+}
+
+body {
+  /* UPDATED: Background Image Configuration */
+  background: url('mountain-background.png') no-repeat center center fixed; 
+  background-size: cover; /* Ensures image covers the whole screen */
+  background-color: var(--bg-color); /* Fallback color */
+  
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* --- 2. STAR NAVIGATION (Pink Star + Brown Sidebar) --- */
+#star-toggle { display: none; }
+
+.star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.star {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 3.5rem;
+    color: #FFB6C1; 
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 102;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.box {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 280px;
+    height: 100vh;
+    background-color: #3E2723; 
+    border-right: 5px solid #281815;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 30px;
+    gap: 30px;
+    box-shadow: 10px 0px 20px rgba(0,0,0,0.4);
+    transition: left 0.6s ease;
+    z-index: 101;
+}
+
+#star-toggle:checked + .star-container .box { left: 0; }
+
+#star-toggle:checked + .star-container .star {
+    transform: translateX(220px) rotate(180deg);
+    color: #fff;
+}
+
+.nav-bar {
+    font-family: "Shrikhand", cursive; 
+    font-size: 1.5rem;
+    color: #D7CCC8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #5D4037;
+    padding-bottom: 10px;
+    transition: all 0.2s;
+}
+
+.nav-bar:hover {
+    color: #FFB6C1;
+    border-bottom-color: #FFB6C1;
+    padding-left: 10px;
+}
+
+/* --- 3. CENTER RECEIPT (OVERLAY LAYOUT) --- */
+.receipt-container {
+    position: relative;
+    width: 380px; 
+    margin-top: 50px;
+    margin-bottom: 100px;
+    z-index: 10;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); /* Made shadow slightly darker for contrast against mountain */
+}
+
+.receipt-bg {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+.receipt-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 45px 60px 45px; 
+    color: #222;
+}
+
+.receipt-header {
+    text-align: center;
+    font-family: "Shrikhand", cursive;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed #444;
+    padding-bottom: 15px;
+}
+
+.receipt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 8px 0;
+    transition: transform 0.2s;
+    font-family: 'Courier New', monospace;
+}
+
+.receipt-item:hover {
+    background-color: rgba(0,0,0,0.05);
+    transform: scale(1.02);
+    cursor: pointer;
+    color: #d14e4e; 
+}
+
+/* --- 4. ANIMATED CAR --- */
+.car-wrap {
+    position: fixed;
+    bottom: -60px; 
+    left: -300px;
+    width: 250px;
+    z-index: 50;
+    pointer-events: none;
+    animation: drive 25s linear infinite;
+}
+
+.driving-car {
+    width: 100%;
+    animation: dirt-road-bounce 0.6s linear infinite;
+}
+
+@keyframes drive {
+    0%   { left: -300px; transform: scaleX(1); }
+    48%  { left: 100vw;  transform: scaleX(1); } 
+    49%  { left: 100vw;  transform: scaleX(-1); } 
+    99%  { left: -300px; transform: scaleX(-1); } 
+    100% { left: -300px; transform: scaleX(1); } 
+}
+
+@keyframes dirt-road-bounce {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-3px); }
+}
+
+/* --- 5. DECORATIONS (RIGHT SIDE STARS) --- */
+.sidestar {
+    position: absolute;
+    font-size: 3.5rem;
+    z-index: 5;
+    opacity: 0.9;
+}
+
+.s1 { top: 10%; right: 20%; color: #FFB6C1; }
+.s2 { top: 35%; right: 10%; color: #ADD8E6; }
+.s3 { top: 60%; right: 25%; color: #FFB6C1; }
+.s4 { top: 85%; right: 15%; color: #ADD8E6; }

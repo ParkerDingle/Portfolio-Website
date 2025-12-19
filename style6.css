@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #0c192c;
+    overflow: hidden; /* Prevents scrollbars */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- NAVBAR STYLES --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000; 
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-links a:hover {
+    color: #4fc3dc;
+    text-shadow: 0 0 10px #4fc3dc;
+}
+
+/* --- BUBBLE STYLES --- */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.bubble {
+    position: absolute;
+    /* Width and Height are now set by JS, but we keep a default just in case */
+    width: 30px; 
+    height: 30px;
+    
+    /* Default Cyan Color */
+    background: #4fc3dc;
+    box-shadow: 
+        0 0 0 10px #4fc3dc44,
+        0 0 50px #4fc3dc,
+        0 0 100px #4fc3dc;
+    
+    border-radius: 50%;
+    
+    /* Animation & Movement */
+    transition: transform 0.4s ease-out; /* Smooth dodging */
+    animation: rise linear infinite;
+}
+
+/* The Purple Variant */
+.bubble.purple {
+    background: #be00fe;
+    box-shadow: 
+        0 0 0 10px #be00fe44,
+        0 0 50px #be00fe,
+        0 0 100px #be00fe;
+}
+
+@keyframes rise {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 120vh;
+        opacity: 0;
+    }
+}

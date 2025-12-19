@@ -1,0 +1,147 @@
+/* --- 1. CORE & ATMOSPHERE --- */
+body {
+    margin: 0; padding: 0;
+    height: 100vh; width: 100vw;
+    overflow: hidden;
+    font-family: 'Rubik', sans-serif;
+    /* Sky Gradient: Starts dark/reddish, ends bright blue/yellow */
+    background: linear-gradient(180deg, #151515, #3f51b5, #e53935, #ffb74d);
+    background-size: 400% 400%;
+    /* Synchronized Sky Animation (10s) */
+    animation: skyMove 10s ease-out forwards;
+}
+@keyframes skyMove { 
+    0% { background-position: 50% 0%; } 
+    100% { background-position: 50% 100%; } 
+}
+
+/* Title Overlay */
+.sky-overlay {
+    position: absolute; top: 50px; width: 100%; text-align: center; z-index: 1;
+    opacity: 0; animation: fadeText 3s ease-in forwards 3s; pointer-events: none;
+}
+.sky-overlay h1 {
+    color: #fff8e1; font-size: 4rem; letter-spacing: 10px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5); margin: 0;
+}
+@keyframes fadeText { to { opacity: 1; } }
+
+/* --- THE RISING SUN --- */
+.sun {
+    position: absolute; width: 140px; height: 140px; 
+    border-radius: 50%;
+    z-index: 1; /* Behind the hills (z-index 2) */
+    
+    /* Animation: Rise over 10 seconds to match the sky */
+    animation: sunRise 10s ease-out forwards;
+}
+
+@keyframes sunRise {
+    0% {
+        bottom: -200px; /* Start hidden below horizon */
+        left: 40%;      /* Start slightly more center */
+        background: #ff6f00; /* Deep Sunrise Orange */
+        box-shadow: 0 0 50px 20px rgba(255, 69, 0, 0.5);
+    }
+    100% {
+        bottom: 70%;    /* End position high in sky */
+        left: 80%;      /* Move to right */
+        background: #ffeb3b; /* Bright Yellow */
+        box-shadow: 0 0 80px 40px rgba(255, 193, 7, 0.4);
+    }
+}
+
+
+/* Hills */
+.hills { position: absolute; bottom: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.hill { position: absolute; border-radius: 100% 100% 0 0; bottom: -50px; }
+.hill-back { width: 120%; height: 350px; background: #1b5e20; left: -10%; z-index: 1; }
+.hill-mid { width: 120%; height: 250px; background: #2e7d32; right: -10%; z-index: 2; }
+.hill-front { width: 110%; height: 150px; background: #4caf50; left: 0; z-index: 3; }
+
+
+/* --- 2. BEE STYLING --- */
+.bee, .queen-bee, .mini-bee { position: absolute; display: flex; align-items: center; justify-content: center; }
+.bee-body {
+    width: 100%; height: 100%; border-radius: 20px;
+    background: repeating-linear-gradient(90deg, #ffd600, #ffd600 4px, #000 4px, #000 8px);
+    border: 2px solid #000; box-shadow: 0 4px 4px rgba(0,0,0,0.2);
+}
+.wing {
+    position: absolute; width: 15px; height: 22px;
+    background: rgba(255,255,255,0.9); border-radius: 50%; top: -18px;
+    border: 1px solid #ccc; animation: flutter 0.1s infinite; transform-origin: bottom center;
+}
+.wing-left { left: 4px; transform: rotate(-20deg); }
+.wing-right { right: 4px; transform: rotate(20deg); animation-delay: 0.05s; }
+@keyframes flutter { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.2); } }
+
+
+/* --- 3. QUEEN BEE MENU --- */
+.queen-menu-container { position: fixed; top: 20px; left: 20px; z-index: 100; }
+.queen-bee {
+    width: 60px; height: 40px; background: none; border: none; padding: 0; cursor: pointer;
+    z-index: 101; transition: transform 0.3s ease;
+}
+.queen-bee:hover { transform: scale(1.1) rotate(5deg); }
+.queen-body { background: repeating-linear-gradient(90deg, #ffab00, #ffab00 5px, #212121 5px, #212121 10px); }
+.queen-crown {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 20px; height: 10px;
+    background: #ffd700; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%);
+}
+
+.worker-item {
+    position: absolute; display: flex; align-items: center; text-decoration: none; opacity: 0; pointer-events: none;
+    transform: translate(-50px, -50px) scale(0.5);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.worker-1 { top: 70px; left: 10px; transition-delay: 0.05s; }
+.worker-2 { top: 130px; left: 25px; transition-delay: 0.1s; }
+.worker-3 { top: 190px; left: 15px; transition-delay: 0.15s; }
+.worker-4 { top: 250px; left: 30px; transition-delay: 0.2s; }
+
+.menu-open .worker-item { opacity: 1; pointer-events: auto; transform: translate(0, 0) scale(1); }
+
+.honeycomb-link {
+    background: #ffecb3; color: #5d4037; padding: 10px 15px; font-weight: bold; font-size: 14px;
+    border-radius: 20px 5px 20px 5px; border: 2px solid #ffb300; margin-left: 10px; transition: all 0.2s ease;
+}
+.worker-item:hover .honeycomb-link { background: #ffca28; transform: scale(1.05); }
+
+.mini-bee {
+    position: relative; width: 30px; height: 20px; transform: rotate(15deg);
+    animation: beeFloat 2s ease-in-out infinite;
+}
+@keyframes beeFloat { 0%, 100% { transform: translateY(0) rotate(15deg); } 50% { transform: translateY(-5px) rotate(10deg); } }
+
+
+/* --- 4. GARDEN (Sunflowers) --- */
+.garden { position: absolute; bottom: 0; width: 100%; height: 400px; display: flex; justify-content: center; z-index: 10; }
+.flower { position: absolute; bottom: -60px; width: 140px; height: 350px; transform: scale(0); transform-origin: bottom center; }
+.stem { position: absolute; left: 50%; bottom: 0; width: 14px; height: 100%; background: linear-gradient(90deg, #1b5e20, #43a047, #1b5e20); transform: translateX(-50%); border-radius: 10px; z-index: 1; }
+.leaf { position: absolute; width: 50px; height: 30px; background: linear-gradient(135deg, #43a047, #1b5e20); z-index: 0; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+.leaf-left { border-radius: 0 100% 0 100%; left: 50%; margin-left: -57px; transform-origin: right center; bottom: 100px; transform: rotate(-25deg); }
+.leaf-left-low { border-radius: 0 100% 0 100%; left: 50%; margin-left: -57px; transform-origin: right center; bottom: 50px; transform: rotate(-35deg); }
+.leaf-right { border-radius: 100% 0 100% 0; left: 50%; margin-left: 7px; transform-origin: left center; bottom: 140px; transform: rotate(25deg); }
+.leaf-right-high { border-radius: 100% 0 100% 0; left: 50%; margin-left: 7px; transform-origin: left center; bottom: 180px; transform: rotate(30deg); }
+.head { position: absolute; top: 0; left: 50%; width: 100px; height: 100px; transform: translateX(-50%); z-index: 10; }
+.center-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, #3e2723 30%, #000 100%); border: 4px solid #5d4037; box-shadow: 0 0 10px rgba(0,0,0,0.5), inset 0 0 20px #000; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; z-index: 20; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.center-btn:hover { transform: translate(-50%, -50%) scale(1.1); border-color: #ffca28; color: #ffca28; background: radial-gradient(circle, #5d4037 30%, #212121 100%); }
+.petals-back, .petals-front { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.petals-back { z-index: 5; transform: rotate(22.5deg); } .petals-front { z-index: 6; }
+.petal { position: absolute; left: 50%; bottom: 50%; width: 30px; height: 90px; margin-left: -15px; background: linear-gradient(to top, #ff6f00, #ffb300); border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transform-origin: bottom center; }
+.petals-back .petal { background: linear-gradient(to top, #e65100, #ff8f00); height: 85px; }
+.p1 { transform: rotate(0deg); } .p2 { transform: rotate(45deg); } .p3 { transform: rotate(90deg); } .p4 { transform: rotate(135deg); } .p5 { transform: rotate(180deg); } .p6 { transform: rotate(225deg); } .p7 { transform: rotate(270deg); } .p8 { transform: rotate(315deg); }
+.flower-1 { left: 10%; animation: grow1 3s ease-out forwards 2.5s; } @keyframes grow1 { 0% { transform: scale(0); } 100% { transform: scale(0.8) rotate(-5deg); } }
+.flower-2 { left: 28%; z-index: 15; animation: grow2 3s ease-out forwards 3s; } @keyframes grow2 { 0% { transform: scale(0); } 100% { transform: scale(1.1) rotate(5deg); } }
+.flower-3 { left: 50%; z-index: 20; animation: grow3 3s ease-out forwards 1.5s; } @keyframes grow3 { 0% { transform: scale(0); } 100% { transform: scale(1.3); } }
+.flower-4 { left: 72%; z-index: 15; animation: grow4 3s ease-out forwards 2.8s; } @keyframes grow4 { 0% { transform: scale(0); } 100% { transform: scale(1.1) rotate(-3deg); } }
+.flower-5 { left: 90%; animation: grow5 3s ease-out forwards 3.5s; } @keyframes grow5 { 0% { transform: scale(0); } 100% { transform: scale(0.8) rotate(8deg); } }
+
+/* AMBIENT BEES */
+.bee-colony { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+.bee-bg { width: 30px; height: 20px; opacity: 0.8; }
+.bee-1-bg { top: 20%; left: -50px; animation: path1 20s linear infinite; }
+.bee-2-bg { top: 50%; right: -50px; transform: scaleX(-1); animation: path2 15s linear infinite 2s; }
+@keyframes path1 { 0% { left:-5%; top:20%; transform:rotate(10deg); } 50% { top:15%; transform:rotate(-5deg); } 100% { left:105%; top:25%; transform:rotate(5deg); } }
+@keyframes path2 { 0% { right:-5%; top:50%; transform:scaleX(-1) rotate(0deg); } 50% { top:60%; transform:scaleX(-1) rotate(-15deg); } 100% { right:105%; top:45%; transform:scaleX(-1) rotate(0deg); } }

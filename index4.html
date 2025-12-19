@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Cherry Bomb</title>
+    <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+
+    <button id="musicToggle" class="music-note-btn">
+        &#9835; 
+    </button>
+
+    <div id="siteNavOverlay" class="nav-overlay">
+        <nav class="nav-links-container">
+            <a href="index.html" class="site-link">Home</a>
+            <a href="index2.html" class="site-link">Projects</a>
+            <a href="index3.html" class="site-link">About Me</a>
+            <a href="index5.html" class="site-link">Cool Stuff</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1>CHERRY BOMB</h1>
+
+        <div class="patch">HELLO WORLD</div>
+
+        <div class="profile-wrapper">
+            <img src="cherry-bomb.png" alt="Profile Picture">
+        </div>
+
+        <div class="contact-card">
+            <a href="mailto:parkerad2023@gmail.com" class="contact-bar">Email Me</a>
+            <a href="https://instagram.com" target="_blank" class="contact-bar">(912) 409-1256</a>
+            <a href="https://github.com/parkerdingle" target="_blank" class="contact-bar">Github</a>
+            <a href="https://www.linkedin.com/in/parker-dingle-196b6b365/" target="_blank" class="contact-bar">LinkedIn</a>
+        </div>
+
+        <div class="signature">
+            Parker Dingle<br>
+            contact me
+        </div>
+    </div>
+
+    <script>
+        const musicBtn = document.getElementById('musicToggle');
+        const navOverlay = document.getElementById('siteNavOverlay');
+
+        musicBtn.addEventListener('click', () => {
+            navOverlay.classList.toggle('open');
+            musicBtn.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>
