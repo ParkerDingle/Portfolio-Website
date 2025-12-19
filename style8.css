@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Exo 2', sans-serif;
+    /* Deep Space Blue Gradient */
+    background: radial-gradient(circle at top, #1e293b, #0f172a);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e2e8f0;
+}
+
+.game-container {
+    background-color: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 650px;
+    padding: 40px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.header h3 {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* Scoreboard */
+.score-board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 15px 40px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.score-box {
+    text-align: center;
+}
+
+.score-box span {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+    color: #38bdf8; /* Light Blue */
+}
+
+.score-box p {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.divider {
+    font-size: 1.2rem;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+#status-text {
+    font-size: 1.5rem;
+    min-height: 30px;
+    text-align: center;
+    color: #e2e8f0;
+    font-weight: 400;
+}
+
+/* Match Area */
+.match-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center vertical alignment */
+    width: 80%;
+    margin: 20px 0;
+    /* Reserve height for the jump animation */
+    height: 250px; 
+}
+
+.hand {
+    width: 45%;
+    max-width: 180px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+    /* IMPORTANT: Pivot from center to avoid swinging arcs */
+    transform-origin: center center; 
+}
+
+/* --- HAND ORIENTATION --- */
+/* Player (Left): Flip horizontally */
+.player-hand {
+    transform: scaleX(-1);
+}
+
+/* Computer (Right): Normal */
+.computer-hand {
+    transform: scaleX(1);
+}
+
+/* Buttons */
+.options {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn {
+    flex: 1;
+    padding: 18px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #334155;
+    color: #f1f5f9;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background-color: #38bdf8; /* Bright Blue */
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.3);
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* --- VERTICAL SHAKE ANIMATION --- */
+/* We use purely TranslateY (Up and Down) to simulate the 
+   "1, 2, 3, Shoot" pumping motion.
+   No rotation prevents the "wrong way" issue.
+*/
+
+@keyframes shakePlayer {
+    0% { transform: scaleX(-1) translateY(0); }
+    20% { transform: scaleX(-1) translateY(-60px); } /* Up */
+    40% { transform: scaleX(-1) translateY(0); }      /* Down */
+    60% { transform: scaleX(-1) translateY(-60px); } /* Up */
+    80% { transform: scaleX(-1) translateY(0); }      /* Down */
+    90% { transform: scaleX(-1) translateY(-30px); } /* Small hop */
+    100% { transform: scaleX(-1) translateY(0); }
+}
+
+@keyframes shakeComputer {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-60px); } /* Up */
+    40% { transform: translateY(0); }      /* Down */
+    60% { transform: translateY(-60px); } /* Up */
+    80% { transform: translateY(0); }      /* Down */
+    90% { transform: translateY(-30px); } /* Small hop */
+    100% { transform: translateY(0); }
+}
+
+.shaking-player {
+    animation: shakePlayer 1.2s ease-in-out;
+}
+
+.shaking-computer {
+    animation: shakeComputer 1.2s ease-in-out;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10; /* Ensures it sits on top of everything */
+}
+
+.home-link {
+    text-decoration: none;
+    color: #e2e8f0;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.home-link:hover {
+    background-color: #e2e8f0;
+    color: #1e293b; /* Changes text to dark when hovered */
+    box-shadow: 0 0 15px rgba(226, 232, 240, 0.5); /* Glow effect */
+}
