@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Warp Tunnel</title>
+    <style>
+        /* --- 1. Reset & Base Styles --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden; /* Prevents scrollbars */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* --- 2. Navigation Bar --- */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px;
+            z-index: 10; /* Ensures nav sits on top of canvas */
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-link:hover {
+            background: white;
+            color: black;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- 3. UI Overlay --- */
+        #ui-layer {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            pointer-events: none; /* Allows mouse to pass through to canvas */
+            color: rgba(255, 255, 255, 0.6);
+            font-family: monospace;
+            font-size: 0.9rem;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        }
+
+        /* --- 4. Canvas --- */
+        canvas {
+            display: block; /* Removes inline spacing issues */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="nav-link">COOL STUFF</a>
+    </nav>
+
+    <div id="ui-layer">
+        MOVE MOUSE: Y = WARP SPEED | X = MOVE LEFT OR RIGHT
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        /**
+         * Configuration & State
+         */
+        const CONFIG = {
+            starCount: 1000,
+            depth: 1000,
+            fov: 100, // Field of view
+            baseSpeed: 5
+        };
+
+        const state = {
+            width: 0,
+            height: 0,
+            centerX: 0,
+            centerY: 0,
+            speed: CONFIG.baseSpeed,
+            curve: 0
+        };
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const stars = [];
+
+        /**
+         * The Star Class
+         */
+        class Star {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(randomZ = false) {
+                // Spread stars far beyond the screen edges to allow for turning
+                this.x = (Math.random() - 0.5) * state.width * 2;
+                this.y = (Math.random() - 0.5) * state.height * 2;
+                
+                // If randomZ is true, place anywhere. If false, place at far back.
+                this.z = randomZ ? Math.random() * CONFIG.depth : CONFIG.depth;
+            }
+
+            update() {
+                this.z -= state.speed;
+
+                // Reset star if it passes the camera (z <= 0)
+                if (this.z <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                // Determine screen coordinates based on Z depth and FOV
+                // As Z approaches 0 (camera), the division makes X/Y larger (perspective)
+                const scale = CONFIG.fov / this.z;
+                
+                // Apply the "Curve" offset based on how close the star is
+                const curveInfluence = (CONFIG.depth - this.z) * (state.curve * 0.001);
+
+                const x2d = this.x * scale + state.centerX + curveInfluence;
+                const y2d = this.y * scale + state.centerY;
+
+                // Calculate where the star was *last* frame to draw the trail
+                const prevScale = CONFIG.fov / (this.z + state.speed);
+                const prevX2d = this.x * prevScale + state.centerX + curveInfluence;
+                const prevY2d = this.y * prevScale + state.centerY;
+
+                // Size depends on closeness
+                const size = (1 - this.z / CONFIG.depth) * 4;
+
+                // Draw the trail
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.z / (CONFIG.depth * 2)})`; 
+                ctx.lineWidth = size;
+                ctx.moveTo(x2d, y2d);
+                ctx.lineTo(prevX2d, prevY2d);
+                ctx.stroke();
+
+                // Draw the star head
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.arc(x2d, y2d, size/2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        /**
+         * System Functions
+         */
+        function resize() {
+            state.width = canvas.width = window.innerWidth;
+            state.height = canvas.height = window.innerHeight;
+            state.centerX = state.width / 2;
+            state.centerY = state.height / 2;
+        }
+
+        function init() {
+            resize();
+            window.addEventListener('resize', resize);
+            
+            // Populate star array
+            for (let i = 0; i < CONFIG.starCount; i++) {
+                stars.push(new Star());
+            }
+
+            // Input Handling
+            window.addEventListener('mousemove', (e) => {
+                const normalizedY = e.clientY / state.height;
+                
+                // Speed: Map Y axis. Top is fast (20), Bottom is slow/reverse (0.5)
+                state.speed = (1 - normalizedY) * 20 + 0.5;
+
+                // Curve: Map X axis relative to center
+                state.curve = (e.clientX - state.centerX) * 5;
+            });
+
+            loop();
+        }
+
+        function loop() {
+            // Semi-transparent background creates the "motion blur" trail fade effect
+            ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+            ctx.fillRect(0, 0, state.width, state.height);
+
+            for (let star of stars) {
+                star.update();
+                star.draw();
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        // Start the engine
+        init();
+
+    </script>
+</body>
+</html>
