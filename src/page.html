@@ -1,0 +1,1091 @@
+<title>Parker Dingle</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Parker Dingle: computer science student at Georgia Southern building machine-learning models and the data pipelines that feed them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freckle+Face&family=Schoolbell&family=Patrick+Hand&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: a worn leather ring binder lying open on graph paper. Each view is a two-page spread (Work is a portrait binder with divider tabs). */
+:root {
+  --paper-bg: #fbf8f1;
+  --grid: rgba(77, 125, 196, 0.13);
+  --grid-strong: rgba(77, 125, 196, 0.2);
+  --blue: #285ab8;
+  --red: #c51b25;
+  --ink: #4d0000;
+  --ink-soft: #6e2a2a;
+  --orange: #e0782b;
+  --page: #f6f5f1;
+  --leather: #2f2f2f;
+  --stitch: #ebe7dd;
+  --tab: #e4e1da;
+  --kraft: #e1cdb4;
+
+  --font-brush: "Freckle Face", "Chewy", "Comic Sans MS", cursive;
+  --font-hand: "Schoolbell", "Patrick Hand", "Comic Sans MS", cursive;
+  --font-read: "Patrick Hand", "Schoolbell", "Comic Sans MS", cursive;
+  --font-type: "Courier Prime", "Courier New", monospace;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-size: 17px; line-height: 1.35;
+  background-color: var(--paper-bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 11px 11px;
+}
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+a { color: var(--blue); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--blue); color: #fff; padding: 8px 12px; border-radius: 6px; }
+.skip:focus { top: 10px; }
+
+.wrap {
+  max-width: 1200px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- header ---------- */
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; padding-block: 18px 6px; flex-wrap: wrap; }
+.logo { font-family: var(--font-brush); font-size: 46px; line-height: 1; color: var(--blue); text-decoration: none; letter-spacing: 0.01em; margin: 0; font-weight: 400; }
+.logo a { color: inherit; text-decoration: none; }
+.nav-wrap { display: flex; align-items: center; gap: 22px; }
+.nav { display: flex; gap: 6px 24px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.nav a { position: relative; display: inline-block; font-family: var(--font-brush); font-size: 30px; line-height: 1; color: var(--blue); text-decoration: none; padding: 4px 4px; }
+.nav a:hover { color: #1d4590; }
+.nav a .circle { position: absolute; left: -12px; right: -12px; top: -6px; bottom: -6px; width: calc(100% + 24px); height: calc(100% + 12px); pointer-events: none; opacity: 0; }
+.nav a[aria-current="page"] .circle { opacity: 1; }
+.nav a[aria-current="page"] .circle path { stroke-dasharray: 360; stroke-dashoffset: 0; animation: draw 450ms ease-out; }
+@keyframes draw { from { stroke-dashoffset: 360; } }
+.vinyl { width: 84px; height: 72px; border: 0; background: none; padding: 0; cursor: pointer; position: relative; flex: none; }
+.vinyl .disc { position: absolute; left: 0; top: 2px; width: 68px; height: 68px; transition: transform 300ms; }
+.vinyl.spinning .disc, .vinyl:hover .disc { animation: spin 1.8s linear infinite; }
+.vinyl .arm { position: absolute; right: 0; top: 0; width: 26px; height: 70px; transform-origin: 70% 8%; transition: transform 400ms; }
+.vinyl.spinning .arm { transform: rotate(14deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- binder: landscape spread ---------- */
+.stage { padding-block: 10px 40px; }
+.binder {
+  position: relative; margin-inline: auto; max-width: 1110px;
+  padding: 18px 92px;
+  border-radius: 20px 14px 14px 20px;
+  background: url("img/leather.jpg") 0 0 / 520px, var(--leather);
+  box-shadow: 0 22px 28px -20px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05), inset 0 0 30px rgba(0,0,0,0.55);
+}
+.binder::before { content: ""; position: absolute; inset: 8px; border: 2px dashed var(--stitch); border-radius: 14px 10px 10px 14px; opacity: 0.8; pointer-events: none; }
+.spread { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); min-height: 590px; }
+.page {
+  position: relative; min-width: 0;
+  background: linear-gradient(var(--shade-dir, to right), transparent 82%, rgba(60,50,40,0.13)), url("img/paper.jpg"), var(--page);
+  padding: 54px 46px 46px;
+}
+.page.left { border-radius: 6px 0 0 6px; box-shadow: -1px 1px 0 #d8d6cf, -3px 2px 0 #efede7, -4px 3px 0 #d3d1c9, -6px 4px 0 #ebe9e3, -7px 5px 0 #cfccc4; }
+.page.right { --shade-dir: to left; border-radius: 0 6px 6px 0; box-shadow: 1px 1px 0 #d8d6cf, 3px 2px 0 #efede7, 4px 3px 0 #d3d1c9, 6px 4px 0 #ebe9e3, 7px 5px 0 #cfccc4; }
+.spine { position: relative; background: linear-gradient(to right, #d9d7d0, #efede7 30%, #efede7 70%, #d9d7d0); }
+.spine::before { /* metal bar */
+  content: ""; position: absolute; left: 50%; top: 14px; bottom: 14px; width: 30px; margin-left: -15px; border-radius: 14px;
+  background: linear-gradient(to right, #7c7c7c, #e9e9e9 22%, #fbfbfb 34%, #a9a9a9 52%, #e6e6e6 70%, #ffffff 80%, #8a8a8a);
+  box-shadow: 0 0 6px rgba(0,0,0,0.35);
+}
+.ring { position: absolute; left: 50%; width: 150px; height: 38px; margin-left: -75px; pointer-events: none; filter: drop-shadow(0 3px 2px rgba(0,0,0,0.35)); }
+.spine-h { display: none; }
+
+.strap {
+  position: absolute; right: -38px; top: 46%; width: 118px; height: 64px; z-index: 3;
+  border: 0; cursor: pointer; padding: 0;
+  border-radius: 12px 6px 6px 12px;
+  background: url("img/leather.jpg") 120px 60px / 520px, #3a3a3a;
+  box-shadow: 0 8px 12px -6px rgba(0,0,0,0.6), inset 0 0 12px rgba(0,0,0,0.5);
+}
+.strap::before { content: ""; position: absolute; inset: 8px 10px; border-top: 2px dashed var(--stitch); border-bottom: 2px dashed var(--stitch); opacity: 0.85; }
+.strap .arrow { position: absolute; left: -44px; top: 5px; width: 84px; height: 46px; transition: transform 200ms; }
+.strap:hover .arrow { transform: translateX(6px); }
+.strap-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* page-turn */
+.view { animation: open 380ms ease-out; }
+@keyframes open { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .view, .nav a .circle path { animation: none !important; } .vinyl:hover .disc, .vinyl.spinning .disc { animation: none; } html { scroll-behavior: auto; } }
+
+/* ---------- shared bits ---------- */
+.brush { font-family: var(--font-brush); color: var(--red); font-weight: 400; line-height: 1.02; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+.hand { font-family: var(--font-hand); color: var(--ink); }
+.center { text-align: center; }
+.dots { font-size: 19px; line-height: 1.6; margin: 14px 0 0; }
+.note-p { font-size: 17.5px; line-height: 1.38; margin: 0 auto 12px; max-width: 34ch; text-align: center; }
+
+.polaroid {
+  margin: 0; background: linear-gradient(160deg, #f1f1ee, #dcdcd8); padding: 9px 9px 36px; width: 190px;
+  box-shadow: 0 8px 14px -4px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(0,0,0,0.06);
+  transform: rotate(var(--r, -3deg)); position: relative;
+}
+.polaroid img, .polaroid canvas { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; background: #222; display: block; }
+.polaroid figcaption { position: absolute; left: 10px; right: 10px; bottom: 8px; font-family: var(--font-hand); font-size: 16px; color: #333; text-align: center; }
+.polaroid a { color: inherit; text-decoration: none; }
+.tape { position: absolute; width: 84px; height: 26px; background: rgba(238, 226, 190, 0.78); box-shadow: 0 1px 2px rgba(0,0,0,0.15); transform: rotate(var(--tr, -6deg)); z-index: 2; }
+
+.btn-sketch {
+  display: inline-flex; align-items: center; gap: 8px; position: relative;
+  font-family: var(--font-brush); font-size: 22px; color: var(--blue); text-decoration: none;
+  padding: 8px 18px; background: transparent; border: 0; cursor: pointer;
+}
+.btn-sketch svg.outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.btn-sketch:hover { color: var(--red); }
+.btn-sketch.solid { color: #fff; }
+.btn-sketch.solid { background: var(--blue); border-radius: 8px 14px 10px 16px / 14px 8px 16px 10px; }
+.btn-sketch.solid svg.outline { color: #173c82; }
+.btn-sketch.solid:hover { color: #fff; background: var(--red); }
+
+/* ---------- home ---------- */
+.home-left { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.home-left h2 { font-size: clamp(42px, 5.4vw, 64px); margin-top: 40px; }
+.pair { position: relative; width: 330px; height: 290px; margin-top: 34px; }
+.pair .polaroid { position: absolute; }
+.pair .p1 { left: 0; top: 0; --r: -2deg; }
+.pair .p2 { left: 135px; top: 78px; --r: 3deg; }
+.home-right { display: flex; flex-direction: column; align-items: center; }
+.home-right .intro { margin-top: 44px; }
+
+/* ---------- TV ---------- */
+.tv-wrap { margin-top: auto; display: flex; flex-direction: column; align-items: center; }
+.tv { font-size: 10px; position: relative; width: 30em; }
+.tv-cab {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 5.4em; gap: 1em;
+  padding: 1.5em 1.4em 1.5em 1.5em; border-radius: 2.6em 2.6em 2.2em 2.2em;
+  background: linear-gradient(172deg, #e5464d 0%, #c7262f 30%, #a31b23 100%);
+  box-shadow: inset 0 0.5em 0.7em rgba(255,255,255,0.28), inset 0 -0.7em 1em rgba(0,0,0,0.35), 0 1.2em 1.4em -0.8em rgba(0,0,0,0.55);
+}
+.tv-bezel { padding: 1em; border-radius: 2.2em; background: linear-gradient(145deg, #f3d6ba, #c9986f 55%, #e9c5a2); box-shadow: inset 0 0 0 0.25em rgba(80,40,10,0.18), inset 0 0.3em 0.5em rgba(255,255,255,0.45); }
+.tv-screen { position: relative; aspect-ratio: 4 / 3; border-radius: 18% / 22%; overflow: hidden; background: #0e0e0e; box-shadow: inset 0 0 0 0.3em #2b211a; }
+.tv-screen > img, .tv-screen > canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tv-screen::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px),
+              radial-gradient(120% 100% at 50% 50%, transparent 58%, rgba(0,0,0,0.6) 100%),
+              linear-gradient(150deg, rgba(255,255,255,0.18), transparent 38%); }
+.tv-static { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
+.tv-osd { position: absolute; left: 12%; top: 9%; z-index: 3; font-family: var(--font-type); font-weight: 700; font-size: 1.5em; color: #fff; text-shadow: 0 0 4px rgba(120,255,140,0.7), 0 0 1px #000; letter-spacing: 0.06em; }
+.tv-panel { display: flex; flex-direction: column; align-items: center; gap: 0.9em; padding: 0.9em 0.6em; border-radius: 1.2em; background: linear-gradient(160deg, #f0d0b0, #c69a74); box-shadow: inset 0 0 0 0.2em rgba(80,40,10,0.15); }
+.dial { width: 4em; height: 4em; border-radius: 50%; border: 0.35em solid #2f2f2f; cursor: pointer; padding: 0; position: relative;
+  background: repeating-conic-gradient(from 0deg, #555 0 2deg, transparent 2deg 30deg), radial-gradient(circle at 38% 32%, #ffffff, #d6d6d6 40%, #9a9a9a 78%);
+  box-shadow: 0 0.25em 0.4em rgba(0,0,0,0.45); transition: transform 220ms; }
+.dial::after { content: ""; position: absolute; left: 50%; top: 50%; width: 0.45em; height: 1.55em; margin: -1.45em 0 0 -0.225em; border-radius: 0.3em; background: #222; transform-origin: 50% 1.45em; transform: rotate(var(--a, 0deg)); transition: transform 260ms cubic-bezier(.3,1.5,.5,1); }
+.dial:hover { transform: scale(1.06); }
+.grille { flex: 1; width: 100%; min-height: 4em; border-radius: 0.5em; background: repeating-linear-gradient(90deg, #2a2a2a 0 0.35em, #75665a 0.35em 0.6em); box-shadow: inset 0 0 0 0.2em rgba(0,0,0,0.25); }
+.tv-legs { display: block; width: 26em; height: 7.4em; margin: -0.4em auto 0; }
+.tv-note {
+  position: absolute; z-index: 5; left: 2.4em; top: 2.2em; width: 19.6em; height: 13.4em; padding: 1.4em 1.4em 1em 3em;
+  background: repeating-linear-gradient(to bottom, transparent 0 1.75em, rgba(70,110,170,0.35) 1.75em calc(1.75em + 1px)), #f2ede1;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 96% 92%, 91% 89%, 86% 94%, 80% 90%, 74% 95%, 68% 91%, 61% 95%, 55% 90%, 49% 94%, 42% 90%, 36% 95%, 29% 91%, 23% 95%, 17% 90%, 11% 94%, 5% 90%, 0 93%);
+  box-shadow: 0 0.3em 0.8em rgba(0,0,0,0.3);
+  display: flex; align-items: center;
+}
+.tv-note::before { content: ""; position: absolute; left: 1.1em; top: 1em; bottom: 1.6em; width: 0.7em; background: radial-gradient(circle, #8a8a8a 0 0.22em, transparent 0.26em) 0 0 / 0.7em 2.2em repeat-y; opacity: 0.7; }
+.tv-note p { margin: 0; font-family: var(--font-hand); font-size: 1.7em; color: #222; }
+.tv-note .x { position: absolute; right: 0.9em; top: 0.6em; border: 0; background: none; color: var(--red); font-size: 2.2em; line-height: 1; cursor: pointer; padding: 0 0.2em; font-family: var(--font-hand); }
+.tv-caption { margin: 10px 0 0; max-width: 36ch; text-align: center; font-size: 16px; min-height: 2.8em; }
+.tv-caption a { font-family: var(--font-hand); }
+
+/* ---------- about ---------- */
+.about-left h2, .contact-left h2 { font-size: clamp(34px, 3.6vw, 44px); text-align: center; margin-top: 8px; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) 136px; gap: 18px; margin-top: 22px; align-items: start; }
+.about-text p { font-size: 16.5px; line-height: 1.4; text-align: center; margin: 0 0 12px; }
+.film { position: relative; width: 136px; padding: 16px 22px; background: #1d1d1d; border-radius: 3px; transform: rotate(1.2deg);
+  box-shadow: 0 6px 10px -4px rgba(0,0,0,0.5); }
+.film::before, .film::after { content: ""; position: absolute; top: 6px; bottom: 6px; width: 10px;
+  background: repeating-linear-gradient(to bottom, #eae7df 0 7px, transparent 7px 15px); border-radius: 2px; }
+.film::before { left: 6px; } .film::after { right: 6px; }
+.film figure { margin: 0 0 10px; background: #f3efe4; border-radius: 2px; overflow: hidden; }
+.film figure:last-child { margin-bottom: 0; }
+.film canvas { width: 100%; aspect-ratio: 23 / 20; display: block; }
+.film figcaption { font-family: var(--font-hand); font-size: 13px; text-align: center; color: #f3efe4; background: #1d1d1d; padding-top: 3px; }
+.diary h3 { font-family: var(--font-brush); color: var(--red); font-weight: 400; font-size: 34px; margin: 0 0 14px; text-align: center; }
+.diary ol { list-style: none; margin: 0; padding: 0; }
+.diary li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 4px 14px; padding: 9px 0; border-bottom: 1px solid rgba(70,110,170,0.35); }
+.diary .when { font-family: var(--font-hand); color: var(--blue); font-size: 15.5px; padding-top: 2px; }
+.diary .what { font-family: var(--font-read); font-size: 17px; line-height: 1.3; color: var(--ink); }
+.diary .what b { font-weight: 400; color: var(--red); }
+.sticky { position: relative; margin: 26px auto 0; max-width: 300px; padding: 18px 20px 16px; background: #f2ede1; transform: rotate(-1.5deg); box-shadow: 0 6px 10px -4px rgba(0,0,0,0.3); text-align: center; font-size: 17px; }
+.sticky .tape { left: 50%; top: -12px; margin-left: -42px; }
+
+/* ---------- work: portrait binder ---------- */
+.binder.portrait { padding: 0 22px 22px; border-radius: 20px; max-width: 1080px; }
+.binder.portrait::before { border-radius: 14px; }
+.tabs { position: relative; display: flex; gap: 10px; padding: 64px 26px 0; z-index: 0; }
+.tab {
+  flex: 1; min-width: 0; height: 58px; border: 0; cursor: pointer; padding: 10px 6px 0;
+  font-family: var(--font-hand); font-size: 18px; color: #50607e; line-height: 1.1;
+  background: url("img/paper.jpg"), var(--tab);
+  clip-path: polygon(8% 100%, 0 30%, 6% 0, 94% 0, 100% 30%, 92% 100%);
+  border-radius: 12px 12px 0 0; transform: translateY(10px); transition: transform 180ms;
+  box-shadow: inset 0 -6px 8px -6px rgba(0,0,0,0.25);
+}
+.tab:hover { transform: translateY(4px); }
+.tab[aria-selected="true"] { transform: translateY(0); color: var(--ink); background: url("img/paper.jpg"), var(--page); }
+.sheet { position: relative; z-index: 1; background: url("img/paper.jpg"), var(--page); border-radius: 4px; padding: 52px 56px 48px; box-shadow: 0 2px 0 #d8d6cf, 0 4px 0 #ecebe5, 0 5px 0 #d0cec6; }
+.rings-h { position: relative; height: 70px; margin: 0 -22px; display: flex; justify-content: space-around; align-items: center; padding: 0 9%; }
+.rings-h::before { content: ""; position: absolute; left: 6%; right: 6%; top: 50%; height: 26px; margin-top: -13px; border-radius: 12px;
+  background: linear-gradient(to bottom, #7c7c7c, #e9e9e9 22%, #fbfbfb 34%, #a9a9a9 52%, #e6e6e6 70%, #ffffff 80%, #8a8a8a); box-shadow: 0 0 6px rgba(0,0,0,0.4); }
+.rings-h svg { position: relative; width: 30px; height: 96px; }
+.main-projects h2 { font-size: clamp(36px, 4.4vw, 50px); text-align: center; text-transform: uppercase; }
+.cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+.card { border: 0; background: none; padding: 0; cursor: pointer; text-align: center; transform: rotate(var(--r, 0deg)); transition: transform 180ms; }
+.card:hover { transform: rotate(0deg) translateY(-4px); }
+.card .shot { display: block; aspect-ratio: 4 / 5; overflow: hidden; box-shadow: 0 8px 14px -6px rgba(0,0,0,0.45); background: #222; }
+.card .shot img, .card .shot canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card .cap { display: block; margin-top: 10px; font-family: var(--font-hand); color: var(--red); font-size: 17px; }
+.work-hint { text-align: center; margin: 30px 0 0; font-size: 16px; color: var(--ink-soft); }
+
+.project { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 34px; }
+.project h2 { font-size: clamp(38px, 4.6vw, 56px); }
+.project .kind { font-size: 19px; margin: 6px 0 0; color: var(--ink); }
+.project .links { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 16px 0 6px; }
+.project ul { margin: 14px 0 0; padding-left: 22px; font-family: var(--font-read); font-size: 18.5px; line-height: 1.38; color: #2b1b1b; }
+.project li { margin-bottom: 9px; }
+.project li::marker { color: var(--red); content: "✎  "; font-size: 15px; }
+.project .lede { font-family: var(--font-read); font-size: 19.5px; line-height: 1.4; margin: 16px 0 0; color: #2b1b1b; }
+.built { display: inline-block; margin-top: 12px; padding: 6px 14px; background: rgba(238,226,190,0.8); font-family: var(--font-hand); font-size: 15.5px; transform: rotate(-1deg); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.project-media { display: flex; flex-direction: column; align-items: center; gap: 26px; padding-top: 10px; }
+.project-media .polaroid { width: 100%; max-width: 330px; }
+.project-media .polaroid.wide img, .project-media .polaroid.wide canvas { aspect-ratio: 4 / 3; }
+.back { border: 0; background: none; cursor: pointer; font-family: var(--font-hand); font-size: 17px; color: var(--blue); padding: 0; margin-bottom: 14px; text-decoration: underline; text-underline-offset: 3px; }
+
+.skills { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; align-items: center; }
+.skills h2 { font-size: clamp(60px, 8vw, 104px); transform: rotate(-2deg); }
+.skills ul { list-style: none; margin: 18px 0 0; padding: 0; font-family: var(--font-brush); color: var(--red); text-transform: uppercase; line-height: 1.12; }
+.skills li:nth-child(1) { font-size: 34px; } .skills li:nth-child(2) { font-size: 33px; } .skills li:nth-child(3) { font-size: 30px; }
+.skills li:nth-child(4) { font-size: 27px; } .skills li:nth-child(5) { font-size: 25px; } .skills li:nth-child(6) { font-size: 24px; }
+.skills li small { display: block; font-family: var(--font-hand); text-transform: none; color: var(--ink); font-size: 15.5px; margin: 0 0 10px; letter-spacing: 0; line-height: 1.25; }
+.skills-doodle { width: 100%; max-width: 440px; justify-self: center; }
+.skills-doodle canvas { width: 100%; aspect-ratio: 4 / 3; display: block; }
+.skills-doodle p { text-align: center; font-size: 15px; margin: 4px 0 0; }
+.binder-foot { position: relative; height: 40px; }
+.strap-down { position: absolute; left: 50%; top: 4px; width: 66px; height: 120px; margin-left: -33px; border: 0; cursor: pointer; padding: 0;
+  border-radius: 6px 6px 10px 10px; background: url("img/leather.jpg") 40px 200px / 520px, #3a3a3a;
+  box-shadow: 0 8px 12px -6px rgba(0,0,0,0.6), inset 0 0 12px rgba(0,0,0,0.5); }
+.strap-down::before { content: ""; position: absolute; inset: 6px 8px; border-left: 2px dashed var(--stitch); border-right: 2px dashed var(--stitch); opacity: 0.85; }
+.work-stage { padding-bottom: 110px; }
+
+/* ---------- contact ---------- */
+.contact-left { display: flex; flex-direction: column; align-items: center; }
+.contact-left .note-p { margin-top: 14px; }
+.card-note { position: relative; margin-top: 34px; width: min(100%, 360px); padding: 34px 28px 26px; background: url("img/kraft.jpg"), var(--kraft); transform: rotate(-2deg);
+  clip-path: polygon(0 2%, 6% 0, 14% 1.5%, 25% 0, 38% 1%, 50% 0, 63% 1.5%, 75% 0, 88% 1%, 100% 0, 99% 30%, 100% 62%, 99% 100%, 85% 98.5%, 70% 100%, 55% 98%, 40% 100%, 25% 98.5%, 10% 100%, 0 98%, 1% 60%);
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25)); }
+.card-note dl { margin: 0; display: grid; gap: 14px; }
+.card-note dt { font-family: var(--font-hand); color: var(--red); font-size: 15px; }
+.card-note dd { margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: var(--font-read); font-size: 19px; color: #2b1b1b; overflow-wrap: anywhere; }
+.card-note a { color: #2b1b1b; }
+.copy { border: 1.5px solid var(--blue); background: rgba(255,255,255,0.4); color: var(--blue); border-radius: 12px; font-family: var(--font-hand); font-size: 13px; padding: 1px 9px; cursor: pointer; }
+.copy:hover { background: #fff; }
+.stain { position: absolute; width: 150px; height: 150px; left: 6px; bottom: 22px; opacity: 0.5; pointer-events: none; }
+.clip { position: absolute; width: 30px; height: 74px; right: 34px; top: -26px; z-index: 2; }
+.contact-right { display: flex; flex-direction: column; align-items: center; }
+.printer { position: relative; width: 300px; margin-top: 6px; }
+.receipt {
+  position: relative; width: 252px; margin: 0 auto -16px; padding: 26px 18px 34px; background: #fffef9; z-index: 1;
+  font-family: var(--font-type); font-size: 13px; line-height: 1.45; color: #2b2b2b;
+  clip-path: polygon(0 1.4%, 4% 0, 8% 1.4%, 12% 0, 16% 1.4%, 20% 0, 24% 1.4%, 28% 0, 32% 1.4%, 36% 0, 40% 1.4%, 44% 0, 48% 1.4%, 52% 0, 56% 1.4%, 60% 0, 64% 1.4%, 68% 0, 72% 1.4%, 76% 0, 80% 1.4%, 84% 0, 88% 1.4%, 92% 0, 96% 1.4%, 100% 0, 100% 100%, 0 100%);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+  transform-origin: bottom center;
+}
+.receipt.print { animation: print 1.1s steps(18, end); }
+@keyframes print { from { clip-path: inset(100% 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .receipt.print { animation: none; } }
+.receipt .c { text-align: center; }
+.receipt .big { font-weight: 700; font-size: 16px; letter-spacing: 0.08em; }
+.receipt hr { border: 0; border-top: 1.5px dashed #9a9a9a; margin: 10px 0; }
+.receipt .row { display: flex; justify-content: space-between; gap: 8px; }
+.receipt .row span:first-child { white-space: nowrap; }
+.receipt .barcode { height: 38px; margin: 12px 8px 4px; background: repeating-linear-gradient(90deg, #222 0 2px, transparent 2px 4px, #222 4px 5px, transparent 5px 8px, #222 8px 11px, transparent 11px 12px, #222 12px 13px, transparent 13px 16px); }
+.printer-body { position: relative; z-index: 2; height: 92px; border-radius: 16px 16px 20px 20px; background: linear-gradient(180deg, #6d7f96, #4a5a70 60%, #3c4a5d); box-shadow: inset 0 3px 4px rgba(255,255,255,0.3), inset 0 -6px 10px rgba(0,0,0,0.35), 0 12px 16px -10px rgba(0,0,0,0.6); }
+.printer-body::before { content: ""; position: absolute; left: 22px; right: 22px; top: 12px; height: 10px; border-radius: 6px; background: #1e252f; box-shadow: inset 0 3px 4px rgba(0,0,0,0.7); }
+.printer-body .led { position: absolute; right: 24px; bottom: 22px; width: 10px; height: 10px; border-radius: 50%; background: #7dff8d; box-shadow: 0 0 8px #7dff8d; }
+.printer-body .brand { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: var(--font-type); font-weight: 700; letter-spacing: 0.3em; font-size: 13px; color: rgba(255,255,255,0.55); }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 26px; }
+
+/* ---------- footer ---------- */
+.foot .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 24px 30px; font-family: var(--font-read); font-size: 15px; color: var(--blue); }
+.foot a { color: var(--blue); }
+
+/* ---------- responsive ---------- */
+.binder:not(.portrait) { max-width: min(1130px, calc(100% - 40px)); }
+main { overflow-x: clip; }
+@media (max-width: 1120px) {
+  .binder { padding: 18px 54px; }
+  .page { padding: 44px 24px 36px; }
+  .tv { font-size: 8.6px; }
+  .pair { width: 290px; height: 260px; }
+  .pair .polaroid { width: 168px; }
+  .pair .p2 { left: 118px; top: 70px; }
+  .strap { right: -32px; width: 96px; }
+  .ring { width: 116px; height: 30px; margin-left: -58px; }
+  .about-left h2, .contact-left h2 { font-size: 32px; }
+  .about-left, .contact-left { padding-right: 34px; }
+  .about-grid { grid-template-columns: minmax(0, 1fr) 116px; }
+  .film { width: 116px; padding: 14px 18px; }
+}
+@media (max-width: 900px) {
+  .binder, .binder:not(.portrait) { max-width: 100%; padding: 14px 14px 22px; border-radius: 18px; }
+  .binder::before { border-radius: 12px; }
+  .spread { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .spine { display: none; }
+  .spine-h { display: flex; position: relative; height: 64px; justify-content: space-around; align-items: center; padding: 0 12%; background: var(--leather); margin: 0 -14px; }
+  .spine-h::before { content: ""; position: absolute; left: 6%; right: 6%; top: 50%; height: 24px; margin-top: -12px; border-radius: 12px;
+    background: linear-gradient(to bottom, #7c7c7c, #e9e9e9 22%, #fbfbfb 34%, #a9a9a9 52%, #e6e6e6 70%, #ffffff 80%, #8a8a8a); }
+  .spine-h svg { position: relative; width: 26px; height: 88px; }
+  .page, .page.left, .page.right { border-radius: 6px; padding: 40px 22px 34px; box-shadow: 0 2px 0 #d8d6cf, 0 4px 0 #ecebe5; --shade-dir: to bottom; }
+  .strap { position: relative; right: auto; top: auto; display: block; margin: 18px auto -6px; width: 180px; height: 56px; border-radius: 10px; }
+  .strap .arrow { left: -70px; top: 2px; width: 80px; }
+  .strap-label { right: 50%; transform: translateX(50%); bottom: -24px; }
+  .home-right .intro { margin-top: 10px; }
+  .tv-wrap { margin-top: 24px; }
+  .tabs { padding: 40px 10px 0; gap: 4px; overflow-x: auto; }
+  .tab { min-width: 92px; font-size: 15px; height: 52px; }
+  .sheet { padding: 34px 20px 30px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project { grid-template-columns: minmax(0, 1fr); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+  .binder.portrait { padding: 0 12px 16px; }
+  .rings-h { margin: 0 -12px; }
+}
+@media (max-width: 560px) {
+  .logo { font-size: 38px; }
+  .nav a { font-size: 25px; }
+  .nav { gap: 4px 14px; }
+  .vinyl { display: none; }
+  .tv { font-size: 9px; }
+  .pair { width: 290px; height: 270px; }
+  .pair .polaroid { width: 170px; }
+  .pair .p2 { left: 116px; }
+  .about-grid { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .film { width: 100%; max-width: 300px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; transform: none; }
+  .film figure { margin: 0; }
+  .diary li { grid-template-columns: minmax(0, 1fr); }
+  .printer { width: 100%; max-width: 300px; }
+}
+</style>
+<!--BODY-->
+<a class="skip" href="#views">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdfdfd"/><stop offset="0.3" stop-color="#bdbdbd"/><stop offset="0.55" stop-color="#6f6f6f"/><stop offset="0.8" stop-color="#d9d9d9"/><stop offset="1" stop-color="#8d8d8d"/>
+    </linearGradient>
+    <linearGradient id="metalv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8e8e8e"/><stop offset="0.4" stop-color="#ffffff"/><stop offset="0.7" stop-color="#bdbdbd"/><stop offset="1" stop-color="#f2f2f2"/>
+    </linearGradient>
+    <symbol id="ring" viewBox="0 0 150 38">
+      <ellipse cx="12" cy="24" rx="9" ry="7" fill="#1e1e1e"/><ellipse cx="12" cy="23" rx="6" ry="4.5" fill="#0c0c0c"/>
+      <ellipse cx="138" cy="24" rx="9" ry="7" fill="#1e1e1e"/><ellipse cx="138" cy="23" rx="6" ry="4.5" fill="#0c0c0c"/>
+      <path d="M13 24 C16 4, 134 4, 137 24" fill="none" stroke="#3d3d3d" stroke-width="10" stroke-linecap="round"/>
+      <path d="M13 24 C16 4, 134 4, 137 24" fill="none" stroke="url(#metal)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M22 15 C40 8, 110 8, 128 15" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.9"/>
+    </symbol>
+    <symbol id="ringv" viewBox="0 0 30 96">
+      <ellipse cx="17" cy="9" rx="5" ry="6" fill="#2a2a2a"/>
+      <ellipse cx="17" cy="87" rx="5" ry="6" fill="#2a2a2a"/>
+      <path d="M18 9 C3 14, 3 82, 18 87" fill="none" stroke="url(#metalv)" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="nav-circle" viewBox="0 0 140 50" preserveAspectRatio="none">
+      <path d="M22 9 C55 1, 118 2, 133 17 C146 31, 104 46, 62 45 C22 44, 3 35, 6 23 C9 12, 40 6, 74 6" fill="none" stroke="#e0782b" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </symbol>
+    <symbol id="arrow" viewBox="0 0 92 50">
+      <path d="M4 34 C22 22, 44 18, 74 24" fill="none" stroke="#c51b25" stroke-width="6" stroke-linecap="round"/>
+      <path d="M56 8 C66 14, 76 20, 84 26 C74 30, 64 36, 56 44" fill="none" stroke="#c51b25" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 40 C26 30, 46 27, 70 30" fill="none" stroke="#9e141c" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    </symbol>
+    <symbol id="btn-outline" viewBox="0 0 200 50" preserveAspectRatio="none">
+      <path d="M6 8 C60 3, 140 4, 194 6 C197 18, 196 32, 193 44 C140 47, 60 46, 7 44 C4 32, 3 18, 6 8 Z" fill="none"/>
+      <path d="M4 10 C60 4, 150 3, 196 8 M195 5 C198 20, 197 34, 195 46 M196 44 C140 49, 60 47, 5 45 M7 47 C3 34, 2 20, 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <p class="logo"><a href="#home" data-go="home">Parker Dingle</a></p>
+    <div class="nav-wrap">
+      <nav aria-label="Pages">
+        <ul class="nav">
+          <li><a href="#about" data-go="about">About<svg class="circle" preserveAspectRatio="none" aria-hidden="true"><use href="#nav-circle"/></svg></a></li>
+          <li><a href="#work" data-go="work">Work<svg class="circle" preserveAspectRatio="none" aria-hidden="true"><use href="#nav-circle"/></svg></a></li>
+          <li><a href="Parker_Dingle_Resume.pdf" download>Resume<svg class="circle" preserveAspectRatio="none" aria-hidden="true"><use href="#nav-circle"/></svg></a></li>
+          <li><a href="#contact" data-go="contact">Contact<svg class="circle" preserveAspectRatio="none" aria-hidden="true"><use href="#nav-circle"/></svg></a></li>
+        </ul>
+      </nav>
+      <button class="vinyl" id="vinyl" type="button" aria-label="Spin the record" aria-pressed="false">
+        <svg class="disc" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="49" fill="#141414"/>
+          <g fill="none" stroke="#2c2c2c" stroke-width="0.8">
+            <circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="32"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="24"/>
+          </g>
+          <path d="M18 30 A40 40 0 0 1 40 12" stroke="#5a6c8c" stroke-width="3" fill="none" opacity="0.55"/>
+          <path d="M84 66 A40 40 0 0 1 62 88" stroke="#5a6c8c" stroke-width="3" fill="none" opacity="0.4"/>
+          <circle cx="50" cy="50" r="17" fill="#c51b25"/>
+          <circle cx="50" cy="50" r="12" fill="none" stroke="#f2d6a8" stroke-width="1.2" opacity="0.8"/>
+          <path d="M40 46 h20" stroke="#f2d6a8" stroke-width="1.6" opacity="0.8"/>
+          <circle cx="50" cy="50" r="2.2" fill="#f4f1ea"/>
+        </svg>
+        <svg class="arm" viewBox="0 0 26 70" aria-hidden="true">
+          <circle cx="18" cy="6" r="5" fill="#e9e9e9" stroke="#9a9a9a" stroke-width="1"/>
+          <path d="M18 6 L19 40 L8 60" fill="none" stroke="#d8d8d8" stroke-width="2.6" stroke-linecap="round"/>
+          <rect x="3" y="57" width="9" height="7" rx="1.5" transform="rotate(-30 7 60)" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="views">
+  <!-- ================= HOME ================= -->
+  <section class="view stage" id="view-home" data-view="home" aria-label="Home">
+    <div class="wrap">
+      <div class="binder">
+        <div class="spread">
+          <div class="page left home-left">
+            <h1 class="brush">Data Science &amp; ML</h1>
+            <p class="dots hand">Python • SQL • Machine Learning<br>Data Pipelines • Analytics</p>
+            <div class="pair">
+              <figure class="polaroid p1"><a href="#dink-engine" data-go="work" data-project="dink"><img src="img/dink-court-sq.jpg" alt="Dink Engine: a 3D pickleball doubles court with four players" width="640" height="610"></a><figcaption>dink engine</figcaption></figure>
+              <figure class="polaroid p2"><a href="#the-fight-camp" data-go="work" data-project="fight"><img src="img/fight-camp-sq.jpg" alt="The Fight Camp app showing league standings and an upcoming UFC card" width="600" height="600"></a><figcaption>the fight camp</figcaption></figure>
+            </div>
+          </div>
+          <div class="spine" aria-hidden="true">
+            <svg class="ring" style="top:9%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:19%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:29%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:64%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:74%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:84%"><use href="#ring"/></svg>
+          </div>
+          <div class="spine-h" aria-hidden="true"><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg></div>
+          <div class="page right home-right">
+            <div class="intro">
+              <p class="note-p hand">Hi, I'm Parker, a computer science student at Georgia Southern, graduating May 2027. I build machine-learning models and the data pipelines that feed them.</p>
+              <p class="note-p hand">Last summer I wired SCADA systems as a controls engineering intern, which taught me to check where a number came from before I trust it.</p>
+            </div>
+            <div class="tv-wrap">
+              <div class="tv" id="tv">
+                <div class="tv-cab">
+                  <div class="tv-bezel">
+                    <div class="tv-screen" id="tv-screen" role="img" aria-label="TV showing Dink Engine">
+                      <img id="tv-img" src="img/dink-court.jpg" alt="" width="800" height="600">
+                      <canvas class="tv-static" id="tv-static" hidden></canvas>
+                      <span class="tv-osd" id="tv-osd" aria-hidden="true">CH 1</span>
+                    </div>
+                  </div>
+                  <div class="tv-panel">
+                    <button class="dial" id="dial-next" type="button" aria-label="Next channel" style="--a: 0deg"></button>
+                    <button class="dial" id="dial-prev" type="button" aria-label="Previous channel" style="--a: -40deg"></button>
+                    <div class="grille" aria-hidden="true"></div>
+                  </div>
+                  <div class="tv-note" id="tv-note">
+                    <p>Try changing the channel →</p>
+                    <button class="x" id="tv-note-x" type="button" aria-label="Close the note">✕</button>
+                  </div>
+                </div>
+                <svg class="tv-legs" viewBox="0 0 260 74" aria-hidden="true">
+                  <rect x="30" y="0" width="200" height="12" rx="4" fill="#7a1418"/>
+                  <path d="M58 8 L44 72 L56 72 L72 8 Z" fill="#8a5a3a"/><path d="M60 8 L50 70" stroke="#b07a52" stroke-width="2"/>
+                  <path d="M202 8 L216 72 L204 72 L188 8 Z" fill="#7b4e32"/><path d="M200 8 L210 70" stroke="#a46f48" stroke-width="2"/>
+                  <path d="M108 8 L104 50 L114 50 L118 8 Z" fill="#6e452c"/><path d="M152 8 L156 50 L146 50 L142 8 Z" fill="#6e452c"/>
+                </svg>
+              </div>
+              <p class="tv-caption hand" id="tv-caption">Dink Engine: a pickleball game with a model that grades every shot. <a href="#dink-engine" data-go="work" data-project="dink">See the project</a></p>
+            </div>
+          </div>
+        </div>
+        <button class="strap" type="button" data-go="about" aria-label="Turn the page to About"><svg class="arrow" aria-hidden="true"><use href="#arrow"/></svg><span class="strap-label">about me</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="view stage" id="view-about" data-view="about" aria-label="About" hidden>
+    <div class="wrap">
+      <div class="binder">
+        <div class="spread">
+          <div class="page left about-left">
+            <h2 class="brush">A little bit about me</h2>
+            <div class="about-grid">
+              <div class="about-text hand">
+                <p>Hi, I'm Parker. I'm studying computer science with a minor in management at Georgia Southern in Savannah, and I graduate in May 2027.</p>
+                <p>I like projects that answer a real question with real data: a model that grades pickleball shots, a scraper and scoring engine that runs a fantasy UFC league, an analysis of what makes YouTube videos trend.</p>
+                <p>Outside of class I'm usually watching fights, playing pickleball, spinning Tyler, The Creator records or making coffee at Tosa, where I've been a shift lead since 2024.</p>
+              </div>
+              <div class="film" aria-label="Things I'm into">
+                <figure><canvas data-doodle="glove" width="230" height="200"></canvas><figcaption>UFC</figcaption></figure>
+                <figure><canvas data-doodle="paddle" width="230" height="200"></canvas><figcaption>pickleball</figcaption></figure>
+                <figure><canvas data-doodle="vinyl" width="230" height="200"></canvas><figcaption>vinyl</figcaption></figure>
+                <figure><canvas data-doodle="coffee" width="230" height="200"></canvas><figcaption>coffee</figcaption></figure>
+              </div>
+            </div>
+          </div>
+          <div class="spine" aria-hidden="true">
+            <svg class="ring" style="top:9%"><use href="#ring"/></svg><svg class="ring" style="top:19%"><use href="#ring"/></svg><svg class="ring" style="top:29%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:64%"><use href="#ring"/></svg><svg class="ring" style="top:74%"><use href="#ring"/></svg><svg class="ring" style="top:84%"><use href="#ring"/></svg>
+          </div>
+          <div class="spine-h" aria-hidden="true"><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg></div>
+          <div class="page right">
+            <div class="diary">
+              <h3>Where I've been</h3>
+              <ol>
+                <li><span class="when">May – Aug 2026</span><span class="what"><b>Controls Engineer Intern</b>, Southern Flow. Built SCADA systems that collect sensor data, ran loop checks and tracked down readings that looked right but weren't.</span></li>
+                <li><span class="when">Jan 2025 – now</span><span class="what"><b>Secretary</b>, Tech Developers Association. Meeting records, team communication and workshops.</span></li>
+                <li><span class="when">Sep 2024 – now</span><span class="what"><b>Shift Lead</b>, Tosa Coffee Company. Run busy shifts and train new baristas.</span></li>
+                <li><span class="when">May 2027</span><span class="what"><b>B.S. Computer Science</b>, minor in Management, Georgia Southern University. GPA 3.5.</span></li>
+              </ol>
+            </div>
+            <div class="sticky hand"><span class="tape" aria-hidden="true"></span>Right now I'm looking for data science, analytics and machine learning roles.</div>
+          </div>
+        </div>
+        <button class="strap" type="button" data-go="work" aria-label="Turn the page to Work"><svg class="arrow" aria-hidden="true"><use href="#arrow"/></svg><span class="strap-label">my work</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="view stage work-stage" id="view-work" data-view="work" aria-label="Work" hidden>
+    <div class="wrap">
+      <div class="binder portrait">
+        <div class="tabs" role="tablist" aria-label="Projects">
+          <button class="tab" role="tab" id="tab-dink" data-project="dink" aria-selected="false" aria-controls="sheet-projects">Dink Engine</button>
+          <button class="tab" role="tab" id="tab-fight" data-project="fight" aria-selected="false" aria-controls="sheet-projects">Fight Camp</button>
+          <button class="tab" role="tab" id="tab-youtube" data-project="youtube" aria-selected="false" aria-controls="sheet-projects">YouTube</button>
+          <button class="tab" role="tab" id="tab-trading" data-project="trading" aria-selected="false" aria-controls="sheet-projects">Trading Bot</button>
+          <button class="tab" role="tab" id="tab-knn" data-project="knn" aria-selected="false" aria-controls="sheet-projects">KNN</button>
+        </div>
+        <div class="sheet" id="sheet-projects" role="tabpanel">
+          <div class="main-projects" id="main-projects">
+            <h2 class="brush">Main projects</h2>
+            <div class="cards">
+              <button class="card" type="button" data-project="dink" style="--r:-2deg"><span class="shot"><img src="img/dink-court-sq.jpg" alt="" width="640" height="610"></span><span class="cap">Dink Engine</span></button>
+              <button class="card" type="button" data-project="fight" style="--r:1.5deg"><span class="shot"><img src="img/fight-camp-sq.jpg" alt="" width="600" height="600"></span><span class="cap">The Fight Camp</span></button>
+              <button class="card" type="button" data-project="youtube" style="--r:-1deg"><span class="shot"><canvas data-chart="pipeline" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">YouTube Trends</span></button>
+              <button class="card" type="button" data-project="trading" style="--r:2deg"><span class="shot"><canvas data-chart="trading" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">Trading Bot</span></button>
+              <button class="card" type="button" data-project="knn" style="--r:-1.5deg"><span class="shot"><canvas data-chart="grid" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">KNN Classifier</span></button>
+            </div>
+            <p class="work-hint hand">Pick a tab or a photo to read about a project.</p>
+          </div>
+
+          <article class="project" id="p-dink" data-detail="dink" hidden>
+            <div>
+              <button class="back" type="button" data-back>← all projects</button>
+              <h2 class="brush">Dink Engine</h2>
+              <p class="kind hand">A pickleball game with a machine-learning model inside</p>
+              <div class="links">
+                <a class="btn-sketch" href="https://parkerdingle.github.io/dink-engine/"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Play it</a>
+                <a class="btn-sketch" href="https://github.com/ParkerDingle/dink-engine"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
+              </div>
+              <p class="lede">A 3D doubles game for practicing shot selection. When the ball comes to you, time slows down and a shot-value model scores every option, grades your choice and drives the AI players.</p>
+              <ul>
+                <li>Trained a LightGBM model on 213,300 shots from 30,000 simulated rallies. Validation splits keep whole rallies together, so the model is never tested on a rally it trained on.</li>
+                <li>Checked calibration instead of stopping at AUC (0.58, expected when one shot only nudges who wins a rally). Predicted and actual win rates stay within 0.04 in every bin.</li>
+                <li>Exported the model to ONNX for the browser and to Luau for a Roblox version, with tests that hold each export to the original.</li>
+                <li>Wrote the pipeline for real match video: YOLO and ByteTrack follow players and ball, and a homography maps pixels to court feet.</li>
+                <li>A GitHub Actions job retrains the model on demand and opens a pull request with the new metrics.</li>
+              </ul>
+              <span class="built">Python · LightGBM · scikit-learn · ONNX · YOLO · OpenCV · TypeScript · Three.js</span>
+            </div>
+            <div class="project-media">
+              <figure class="polaroid wide" style="--r:2deg"><img src="img/dink-title.jpg" alt="Dink Engine start screen listing the trained model: 213,300 shots, AUC 0.58" width="630" height="530"><figcaption>the start screen</figcaption></figure>
+              <figure class="polaroid wide" style="--r:-2deg"><canvas data-chart="calibration" data-theme="paper" width="400" height="300"></canvas><figcaption>calibration on 31,998 held-out shots</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="project" id="p-fight" data-detail="fight" hidden>
+            <div>
+              <button class="back" type="button" data-back>← all projects</button>
+              <h2 class="brush">The Fight Camp</h2>
+              <p class="kind hand">Data pipeline and projection model for a fantasy UFC league</p>
+              <div class="links">
+                <a class="btn-sketch" href="https://parkerdingle.github.io/fight-camp/"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>See the league</a>
+                <a class="btn-sketch" href="https://github.com/ParkerDingle/fight-camp"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
+              </div>
+              <p class="lede">A fantasy UFC league I run with four friends. A scraper collects fight results, a scoring engine turns them into points, and a projection model ranked fighters for our draft.</p>
+              <ul>
+                <li>Scrapers for UFCStats and Wikipedia feed a SQLite database that now holds 758 fighters, 55 events and 604 bouts.</li>
+                <li>Two scheduled GitHub Actions jobs run it: one scores a card the night it ends, the other re-checks past events for amended results. Both are idempotent.</li>
+                <li>Projected each fighter's season as expected fights × expected points per fight, shrunk toward the division average so one lucky knockout can't outrank a proven contender.</li>
+                <li>Caught early scrapes storing round-one stats instead of whole-fight totals, fixed the parser, and modelled those stats instead of trusting numbers I knew were wrong.</li>
+                <li>139 automated tests, including one that pins the Python scoring engine to the app's JavaScript.</li>
+              </ul>
+              <span class="built">Python · SQLite · requests · GitHub Actions · JavaScript</span>
+            </div>
+            <div class="project-media">
+              <figure class="polaroid" style="--r:-2deg"><img src="img/fight-camp-sq.jpg" alt="The Fight Camp standings page" width="600" height="600"><figcaption>the league app</figcaption></figure>
+              <figure class="polaroid wide" style="--r:2deg"><canvas data-chart="shrinkage" data-theme="paper" width="400" height="300"></canvas><figcaption>how much a projection trusts one fighter</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="project" id="p-youtube" data-detail="youtube" hidden>
+            <div>
+              <button class="back" type="button" data-back>← all projects</button>
+              <h2 class="brush">YouTube Trend Analysis</h2>
+              <p class="kind hand">Exploratory data analysis</p>
+              <p class="lede">An analysis of more than 6,000 trending YouTube videos to find what actually drives reach and engagement.</p>
+              <ul>
+                <li>Cleaned inconsistent real-world data, including missing fields, mixed formats and duplicate records, before drawing any conclusions.</li>
+                <li>Built reproducible subsets so every finding can be regenerated instead of assembled by hand.</li>
+                <li>Used charts to separate real patterns from artifacts of how the data was collected, then wrote recommendations a non-technical reader could act on.</li>
+              </ul>
+              <span class="built">Python · pandas · Matplotlib · Seaborn</span>
+            </div>
+            <div class="project-media">
+              <figure class="polaroid wide" style="--r:1.5deg"><canvas data-chart="pipeline" data-theme="paper" width="400" height="300"></canvas><figcaption>how the analysis ran</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="project" id="p-trading" data-detail="trading" hidden>
+            <div>
+              <button class="back" type="button" data-back>← all projects</button>
+              <h2 class="brush">Algorithmic Trading Bot</h2>
+              <p class="kind hand">Team of four, I was the system architect</p>
+              <div class="links">
+                <a class="btn-sketch" href="https://github.com/ParkerDingle/Algorithmic-Trading-Bot"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
+              </div>
+              <p class="lede">An automated stock-trading system that trades with paper money. I designed how the pieces fit together.</p>
+              <ul>
+                <li>Connected Alpaca's market-data and order API, a Python strategy engine, a SQL trade log and a Flask web app.</li>
+                <li>The bot runs around the clock against paper accounts, with a live dashboard and Discord alerts that report failures without anyone having to check.</li>
+                <li>Added a login portal and one database for users, trades and bot activity.</li>
+              </ul>
+              <span class="built">Python · Flask · SQLite · Alpaca API · pandas</span>
+            </div>
+            <div class="project-media">
+              <figure class="polaroid wide" style="--r:-1.5deg"><canvas data-chart="trading" data-theme="paper" width="400" height="300"></canvas><figcaption>the architecture I designed</figcaption></figure>
+            </div>
+          </article>
+
+          <article class="project" id="p-knn" data-detail="knn" hidden>
+            <div>
+              <button class="back" type="button" data-back>← all projects</button>
+              <h2 class="brush">KNN Survival Classifier</h2>
+              <p class="kind hand">An end-to-end scikit-learn pipeline</p>
+              <div class="links">
+                <a class="btn-sketch" href="https://github.com/ParkerDingle/Titanic-ML-Project"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
+              </div>
+              <p class="lede">A complete classification pipeline that predicts Titanic passenger survival with k-nearest neighbors.</p>
+              <ul>
+                <li>Filled missing ages with the median for each passenger class instead of one overall value.</li>
+                <li>Engineered family size, travelling alone, fare quartile and age band features.</li>
+                <li>Scaled the features, tuned 120 settings with 5-fold GridSearchCV, and evaluated with a confusion-matrix heat map.</li>
+              </ul>
+              <span class="built">Python · scikit-learn · pandas · NumPy · Seaborn</span>
+            </div>
+            <div class="project-media">
+              <figure class="polaroid wide" style="--r:2deg"><canvas data-chart="grid" data-theme="paper" width="400" height="300"></canvas><figcaption>every setting the search tried</figcaption></figure>
+            </div>
+          </article>
+        </div>
+
+        <div class="rings-h" aria-hidden="true"><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg></div>
+
+        <div class="sheet">
+          <div class="skills">
+            <div>
+              <h2 class="brush">Skills</h2>
+              <ul>
+                <li>Python &amp; SQL<small>plus Java, C++, C# and TypeScript</small></li>
+                <li>Machine learning<small>scikit-learn, LightGBM, ONNX, cross-validation, calibration</small></li>
+                <li>Data pipelines<small>scraping, SQLite, MySQL, PostgreSQL, GitHub Actions</small></li>
+                <li>Analysis &amp; charts<small>pandas, NumPy, Matplotlib, Seaborn</small></li>
+                <li>Software<small>Flask, Git, web apps, Three.js</small></li>
+                <li>Controls<small>SCADA systems, field instrumentation, loop testing</small></li>
+              </ul>
+            </div>
+            <figure class="skills-doodle" style="margin:0">
+              <canvas data-chart="calibration" data-theme="marker" width="440" height="330"></canvas>
+              <p class="hand">my favorite chart: a model that's honest about its odds</p>
+            </figure>
+          </div>
+        </div>
+        <div class="binder-foot">
+          <button class="strap-down" type="button" data-go="contact" aria-label="Turn the page to Contact"><span class="strap-label">contact me</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="view stage" id="view-contact" data-view="contact" aria-label="Contact" hidden>
+    <div class="wrap">
+      <div class="binder">
+        <div class="spread">
+          <div class="page left contact-left">
+            <svg class="stain" viewBox="0 0 150 150" aria-hidden="true"><path d="M75 12 C112 10, 140 40, 138 76 C136 112, 108 140, 72 138 C36 136, 12 108, 14 72 C16 38, 42 14, 75 12 Z" fill="none" stroke="#9c6b3f" stroke-width="5" opacity="0.6"/><path d="M75 18 C108 18, 132 44, 131 76" fill="none" stroke="#9c6b3f" stroke-width="2" opacity="0.5"/></svg>
+            <h2 class="brush">Contact Me</h2>
+            <p class="note-p hand">I'm looking for data science, analytics and machine learning roles. Email is the fastest way to reach me, and I'll get back to you quickly.</p>
+            <div class="card-note">
+              <svg class="clip" viewBox="0 0 30 74" aria-hidden="true"><path d="M9 20 L9 58 C9 68, 23 68, 23 58 L23 12 C23 4, 13 4, 13 12 L13 52 C13 56, 19 56, 19 52 L19 22" fill="none" stroke="#9a9a9a" stroke-width="2.4" stroke-linecap="round"/></svg>
+              <dl>
+                <div><dt>email</dt><dd><a href="mailto:parkerad2023@gmail.com">parkerad2023@gmail.com</a><button class="copy" type="button" data-copy="parkerad2023@gmail.com">copy</button></dd></div>
+                <div><dt>phone</dt><dd><a href="tel:+19124091256">(912) 409-1256</a><button class="copy" type="button" data-copy="(912) 409-1256">copy</button></dd></div>
+                <div><dt>linkedin</dt><dd><a href="https://www.linkedin.com/in/parker-dingle">linkedin.com/in/parker-dingle</a></dd></div>
+                <div><dt>github</dt><dd><a href="https://github.com/ParkerDingle">github.com/ParkerDingle</a></dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="spine" aria-hidden="true">
+            <svg class="ring" style="top:9%"><use href="#ring"/></svg><svg class="ring" style="top:19%"><use href="#ring"/></svg><svg class="ring" style="top:29%"><use href="#ring"/></svg>
+            <svg class="ring" style="top:64%"><use href="#ring"/></svg><svg class="ring" style="top:74%"><use href="#ring"/></svg><svg class="ring" style="top:84%"><use href="#ring"/></svg>
+          </div>
+          <div class="spine-h" aria-hidden="true"><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg><svg><use href="#ringv"/></svg></div>
+          <div class="page right contact-right">
+            <div class="printer">
+              <div class="receipt" id="receipt">
+                <div class="c big">PARKER DINGLE</div>
+                <div class="c">SAVANNAH, GEORGIA</div>
+                <hr>
+                <div class="row"><span>ORDER</span><span>#2027</span></div>
+                <div class="row"><span>STATUS</span><span>OPEN TO WORK</span></div>
+                <hr>
+                <div class="row"><span>1 PYTHON + SQL</span><span>✓</span></div>
+                <div class="row"><span>1 MACHINE LEARNING</span><span>✓</span></div>
+                <div class="row"><span>1 DATA PIPELINES</span><span>✓</span></div>
+                <div class="row"><span>1 SCADA FIELD TIME</span><span>✓</span></div>
+                <div class="row"><span>1 CS DEGREE</span><span>MAY '27</span></div>
+                <hr>
+                <div>EMAIL parkerad2023@gmail.com</div>
+                <div>PHONE (912) 409-1256</div>
+                <hr>
+                <div class="c">THANK YOU, COME AGAIN</div>
+                <div class="barcode" aria-hidden="true"></div>
+              </div>
+              <div class="printer-body" aria-hidden="true"><span class="led"></span><span class="brand">PD-2027</span></div>
+            </div>
+            <div class="contact-actions">
+              <a class="btn-sketch solid" href="Parker_Dingle_Resume.pdf" download><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Download my resume</a>
+              <a class="btn-sketch" href="mailto:parkerad2023@gmail.com"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Email me</a>
+            </div>
+          </div>
+        </div>
+        <button class="strap" type="button" data-go="home" aria-label="Back to the first page"><svg class="arrow" aria-hidden="true"><use href="#arrow"/></svg><span class="strap-label">back to start</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Parker Dingle</span>
+    <a href="https://github.com/ParkerDingle/Portfolio-Website">Source for this site</a>
+  </div>
+</footer>
+<p class="sr-only" aria-live="polite" id="live"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var HAND = '"Patrick Hand", "Schoolbell", cursive';
+
+  /* ---------------- views ---------------- */
+  var ORDER = ["home", "about", "work", "contact"];
+  var PROJECT_HASH = { dink: "dink-engine", fight: "the-fight-camp", youtube: "youtube-trends", trading: "trading-bot", knn: "knn-classifier" };
+  var HASH_PROJECT = {}; Object.keys(PROJECT_HASH).forEach(function (k) { HASH_PROJECT[PROJECT_HASH[k]] = k; });
+  var views = {}; ORDER.forEach(function (v) { views[v] = document.getElementById("view-" + v); });
+  var current = null;
+
+  function show(view, project, opts) {
+    opts = opts || {};
+    if (!views[view]) view = "home";
+    if (view !== current) {
+      ORDER.forEach(function (v) { views[v].hidden = v !== view; });
+      current = view;
+      document.querySelectorAll(".nav a[data-go]").forEach(function (a) {
+        if (a.getAttribute("data-go") === view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      });
+      if (view === "contact") { var r = document.getElementById("receipt"); r.classList.remove("print"); void r.offsetWidth; r.classList.add("print"); }
+      drawPending();
+      if (!opts.initial) {
+        var top = document.querySelector(".top");
+        window.scrollTo({ top: Math.max(0, top.offsetTop), behavior: reduce ? "auto" : "smooth" });
+        document.getElementById("live").textContent = views[view].getAttribute("aria-label") + " page";
+      }
+    }
+    if (view === "work") selectProject(project || null, opts);
+    var hash = view === "work" && project ? PROJECT_HASH[project] : view;
+    if (!opts.fromHash && location.hash.slice(1) !== hash) { try { history.replaceState(null, "", "#" + hash); } catch (e) {} }
+  }
+
+  function selectProject(p, opts) {
+    document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.getAttribute("data-project") === p ? "true" : "false"); });
+    document.getElementById("main-projects").hidden = !!p;
+    document.querySelectorAll("[data-detail]").forEach(function (d) { d.hidden = d.getAttribute("data-detail") !== p; });
+    drawPending();
+    var hash = p ? PROJECT_HASH[p] : "work";
+    if (!(opts && opts.fromHash)) { try { history.replaceState(null, "", "#" + hash); } catch (e) {} }
+  }
+
+  document.addEventListener("click", function (e) {
+    var go = e.target.closest("[data-go]");
+    if (go) { e.preventDefault(); show(go.getAttribute("data-go"), go.getAttribute("data-project")); return; }
+    var card = e.target.closest(".card, .tab");
+    if (card) { selectProject(card.getAttribute("data-project")); document.getElementById("sheet-projects").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); return; }
+    if (e.target.closest("[data-back]")) { selectProject(null); }
+  });
+
+  function fromHash(initial) {
+    var h = (location.hash || "").slice(1);
+    if (h === "views") return;
+    if (HASH_PROJECT[h]) show("work", HASH_PROJECT[h], { fromHash: true, initial: initial });
+    else show(ORDER.indexOf(h) >= 0 ? h : "home", null, { fromHash: true, initial: initial });
+  }
+  window.addEventListener("hashchange", function () { fromHash(false); });
+
+  /* ---------------- vinyl ---------------- */
+  var vinyl = document.getElementById("vinyl");
+  vinyl.addEventListener("click", function () { var on = vinyl.classList.toggle("spinning"); vinyl.setAttribute("aria-pressed", on ? "true" : "false"); });
+
+  /* ---------------- copy buttons ---------------- */
+  document.querySelectorAll(".copy").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-copy");
+      function done(t) { b.textContent = t; setTimeout(function () { b.textContent = "copy"; }, 1500); }
+      function fallback() { var el = b.previousElementSibling, s = window.getSelection(), r = document.createRange(); r.selectNodeContents(el); s.removeAllRanges(); s.addRange(r); done("selected"); }
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(function () { done("copied!"); }, fallback); else fallback(); } catch (err) { fallback(); }
+    });
+  });
+
+  /* ---------------- hand-drawn charts (rough.js) ---------------- */
+  var THEMES = {
+    paper:  { bg: "#f7f3e8", ink: "#3a2a2a", soft: "rgba(58,42,42,0.55)", a: "#c51b25", b: "#285ab8", grid: "rgba(77,125,196,0.18)" },
+    marker: { bg: null,      ink: "#3a2a2a", soft: "rgba(58,42,42,0.55)", a: "#c51b25", b: "#285ab8", grid: null },
+    tv:     { bg: "#151a17", ink: "#f2efe6", soft: "rgba(242,239,230,0.6)", a: "#ffcf5a", b: "#7fd3ff", grid: "rgba(255,255,255,0.07)" }
+  };
+  function prep(cv, theme) {
+    var w = +cv.getAttribute("width"), h = +cv.getAttribute("height");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!cv.__w) { cv.width = w * dpr; cv.height = h * dpr; cv.__w = w; cv.__h = h; }
+    w = cv.__w; h = cv.__h;
+    var ctx = cv.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    if (theme.bg) { ctx.fillStyle = theme.bg; ctx.fillRect(0, 0, w, h); }
+    if (theme.grid) {
+      ctx.strokeStyle = theme.grid; ctx.lineWidth = 1; ctx.beginPath();
+      for (var x = 0.5; x < w; x += 12) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
+      for (var y = 0.5; y < h; y += 12) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
+      ctx.stroke();
+    }
+    return { ctx: ctx, rc: rough.canvas(cv), w: w, h: h };
+  }
+  function label(ctx, s, x, y, color, size, align) {
+    ctx.font = (size || 15) + "px " + HAND; ctx.fillStyle = color; ctx.textAlign = align || "left"; ctx.textBaseline = "middle"; ctx.fillText(s, x, y);
+  }
+  function seedOf(s) { var n = 0; for (var i = 0; i < s.length; i++) n = (n * 31 + s.charCodeAt(i)) % 1000; return n + 1; }
+
+  var CHARTS = {
+    calibration: function (cv, T) {
+      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, o = { seed: 4, roughness: 1.1, stroke: T.ink, strokeWidth: 1.6 };
+      var x0 = w * 0.15, x1 = w * 0.93, y0 = h * 0.12, y1 = h * 0.8, lo = 0.2, hi = 0.7;
+      var sx = function (v) { return x0 + (v - lo) / (hi - lo) * (x1 - x0); }, sy = function (v) { return y1 - (v - lo) / (hi - lo) * (y1 - y0); };
+      rc.line(x0, y1, x1 + 6, y1, o); rc.line(x0, y1, x0, y0 - 6, o);
+      rc.line(sx(lo), sy(lo), sx(hi), sy(hi), { seed: 5, stroke: T.soft, strokeWidth: 1.4, strokeLineDash: [6, 6] });
+      var bins = [[0.29, 0.293, 75], [0.371, 0.361, 4864], [0.465, 0.468, 12109], [0.525, 0.525, 13841], [0.63, 0.667, 1109]];
+      rc.linearPath(bins.map(function (b) { return [sx(b[0]), sy(b[1])]; }), { seed: 6, stroke: T.a, strokeWidth: 3, roughness: 1.4 });
+      var k = w / 400;
+      bins.forEach(function (b, i) { var r = (8 + Math.sqrt(b[2] / 13841) * 16) * k; rc.circle(sx(b[0]), sy(b[1]), r, { seed: 10 + i, fill: T.a, fillStyle: "solid", stroke: T.a, roughness: 1.2 }); });
+      var fs = Math.max(12, 15 * k);
+      [0.2, 0.4, 0.6].forEach(function (v) { label(ctx, v.toFixed(1), sx(v), y1 + fs, T.soft, fs * 0.9, "center"); label(ctx, v.toFixed(1), x0 - 8, sy(v), T.soft, fs * 0.9, "right"); });
+      label(ctx, "predicted win chance", (x0 + x1) / 2, h - fs * 0.7, T.ink, fs, "center");
+      label(ctx, "actual", x0 + 6, y0 - 2, T.ink, fs, "left");
+      label(ctx, "perfect", sx(0.6) + 8, sy(0.58) + 6, T.soft, fs * 0.9, "left");
+    },
+    shrinkage: function (cv, T) {
+      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, o = { seed: 7, stroke: T.ink, strokeWidth: 1.6 };
+      var x0 = w * 0.14, x1 = w * 0.93, y0 = h * 0.14, y1 = h * 0.8, N = 12, k = w / 400, fs = Math.max(12, 15 * k);
+      var sx = function (n) { return x0 + n / N * (x1 - x0); }, sy = function (v) { return y1 - v * (y1 - y0); };
+      rc.line(x0, y1, x1 + 6, y1, o); rc.line(x0, y1, x0, y0 - 6, o);
+      rc.line(x0, sy(1), x1, sy(1), { seed: 8, stroke: T.soft, strokeLineDash: [6, 6] });
+      var pts = []; for (var i = 0; i <= 48; i++) { var n = i / 4; pts.push([sx(n), sy(n / (n + 2))]); }
+      rc.curve(pts, { seed: 9, stroke: T.b, strokeWidth: 3, roughness: 1 });
+      [[1, "1 fight: 1/3 of the way"], [6, "6 fights: 3/4"]].forEach(function (p, i) {
+        var x = sx(p[0]), y = sy(p[0] / (p[0] + 2));
+        rc.circle(x, y, 12 * k, { seed: 20 + i, fill: T.a, fillStyle: "solid", stroke: T.a });
+        label(ctx, p[1], x + 10, y + 16 * k + 4, T.ink, fs * 0.95, "left");
+      });
+      [0, 4, 8, 12].forEach(function (n) { label(ctx, String(n), sx(n), y1 + fs, T.soft, fs * 0.9, "center"); });
+      label(ctx, "fights on record", (x0 + x1) / 2, h - fs * 0.7, T.ink, fs, "center");
+      label(ctx, "trust in own record", x0 + 6, y0 - 4, T.ink, fs, "left");
+      label(ctx, "division average", x1, y1 - 12, T.soft, fs * 0.9, "right");
+    },
+    pipeline: function (cv, T) {
+      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, k = Math.min(w / 400, h / 300), tall = h > w, fs = tall ? 19 : Math.max(12, 15 * k);
+      var steps = [["6,000+ videos", T.b], ["clean it", T.a], ["reproducible subsets", T.ink], ["charts", T.b], ["recommendations", T.a]];
+      var bw = w * (tall ? 0.74 : 0.36), bh = h * (tall ? 0.12 : 0.16);
+      var pos = tall ? steps.map(function (s, i) { return [w * 0.13, h * (0.07 + i * 0.185)]; })
+                     : [[w * 0.05, h * 0.1], [w * 0.55, h * 0.1], [w * 0.55, h * 0.42], [w * 0.55, h * 0.74], [w * 0.05, h * 0.74]];
+      steps.forEach(function (s, i) {
+        var p = pos[i];
+        rc.rectangle(p[0], p[1], bw, bh, { seed: 30 + i, stroke: s[1], strokeWidth: 2, fill: s[1], fillStyle: "hachure", fillWeight: 0.6, hachureGap: 7 });
+        label(ctx, s[0], p[0] + bw / 2, p[1] + bh / 2, T.ink, fs, "center");
+        if (i < steps.length - 1) {
+          var q = pos[i + 1], a, b;
+          if (tall) { a = [p[0] + bw / 2, p[1] + bh + 3]; b = [q[0] + bw / 2, q[1] - 3]; }
+          else if (Math.abs(p[1] - q[1]) < 2) { a = [p[0] + (q[0] > p[0] ? bw + 4 : -4), p[1] + bh / 2]; b = [q[0] + (q[0] > p[0] ? -4 : bw + 4), q[1] + bh / 2]; }
+          else { a = [p[0] + bw / 2, p[1] + bh + 3]; b = [q[0] + bw / 2, q[1] - 3]; }
+          arrow(rc, a, b, T.ink, 40 + i);
+        }
+      });
+    },
+    trading: function (cv, T) {
+      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, k = Math.min(w / 400, h / 300), tall = h > w, fs = tall ? 19 : Math.max(12, 15 * k);
+      var bw = w * (tall ? 0.6 : 0.3), bh = h * (tall ? 0.11 : 0.17);
+      var nodes = tall
+        ? { api: [0.2, 0.05], eng: [0.2, 0.3], disc: [0.2, 0.53], log: [0.2, 0.68], dash: [0.2, 0.86] }
+        : { api: [0.03, 0.12], eng: [0.36, 0.12], disc: [0.68, 0.12], log: [0.36, 0.66], dash: [0.68, 0.66] };
+      var names = { api: ["Alpaca API", T.b], eng: ["strategy engine", T.a], disc: ["Discord alerts", T.ink], log: ["SQL trade log", T.b], dash: ["Flask dashboard", T.ink] };
+      var P = {}; Object.keys(nodes).forEach(function (n, i) {
+        var x = nodes[n][0] * w, y = nodes[n][1] * h; P[n] = [x, y];
+        rc.rectangle(x, y, bw, bh, { seed: 50 + i, stroke: names[n][1], strokeWidth: 2, fill: names[n][1], fillStyle: "hachure", fillWeight: 0.6, hachureGap: 7 });
+        label(ctx, names[n][0], x + bw / 2, y + bh / 2, T.ink, fs, "center");
+      });
+      function c(n, side) { var p = P[n]; return side === "r" ? [p[0] + bw + 4, p[1] + bh / 2] : side === "l" ? [p[0] - 4, p[1] + bh / 2] : side === "b" ? [p[0] + bw / 2, p[1] + bh + 4] : [p[0] + bw / 2, p[1] - 4]; }
+      if (tall) { arrow(rc, c("api", "b"), c("eng", "t"), T.ink, 60); arrow(rc, c("eng", "b"), c("disc", "t"), T.ink, 61); arrow(rc, c("disc", "b"), c("log", "t"), T.soft, 62); arrow(rc, c("log", "b"), c("dash", "t"), T.ink, 63); }
+      else { arrow(rc, c("api", "r"), c("eng", "l"), T.ink, 60); arrow(rc, c("eng", "r"), c("disc", "l"), T.ink, 61); arrow(rc, c("eng", "b"), c("log", "t"), T.ink, 62); arrow(rc, c("log", "r"), c("dash", "l"), T.ink, 63);
+        label(ctx, "paper money only", P.api[0] + bw / 2, h * 0.76, T.soft, fs * 0.95, "center"); }
+    },
+    grid: function (cv, T) {
+      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, k = Math.min(w / 400, h / 300), tall = h > w, fs = tall ? 19 : Math.max(12, 15 * k);
+      var cols = tall ? 6 : 20, rows = tall ? 20 : 6;
+      var x0 = w * (tall ? 0.16 : 0.12), x1 = w * 0.94, y0 = h * (tall ? 0.12 : 0.2), y1 = h * (tall ? 0.9 : 0.78);
+      var cw = (x1 - x0) / cols, rh = (y1 - y0) / rows, s = Math.min(cw, rh) * 0.62;
+      var colors = [T.b, T.b, T.a, T.a, T.ink, T.ink];
+      for (var r = 0; r < rows; r++) for (var cI = 0; cI < cols; cI++) {
+        var setting = tall ? cI : r;
+        ctx.fillStyle = colors[setting]; ctx.globalAlpha = 0.85;
+        var x = x0 + cw * (cI + 0.5) + (Math.sin(r * 7 + cI * 3) * s * 0.12), y = y0 + rh * (r + 0.5) + (Math.cos(r * 5 + cI) * s * 0.12);
+        ctx.beginPath(); ctx.arc(x, y, s / 2, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+      }
+      label(ctx, "120 settings × 5 folds = 600 fits", w / 2, tall ? h * 0.05 : h * 0.09, T.ink, fs, "center");
+      label(ctx, tall ? "k = 1 … 20 ↓" : "neighbors k = 1 … 20 →", tall ? x0 - 6 : (x0 + x1) / 2, tall ? h * 0.95 : h * 0.9, T.soft, fs * 0.9, tall ? "left" : "center");
+      if (!tall) { label(ctx, "3 metrics", w * 0.02, y0 + rh * 1, T.soft, fs * 0.85, "left"); label(ctx, "× 2", w * 0.02, y0 + rh * 2.2, T.soft, fs * 0.85, "left"); label(ctx, "weights", w * 0.02, y0 + rh * 3.4, T.soft, fs * 0.85, "left"); }
+    }
+  };
+  function arrow(rc, a, b, color, seed) {
+    rc.line(a[0], a[1], b[0], b[1], { seed: seed, stroke: color, strokeWidth: 1.8 });
+    var ang = Math.atan2(b[1] - a[1], b[0] - a[0]), L = 10;
+    rc.line(b[0], b[1], b[0] - L * Math.cos(ang - 0.5), b[1] - L * Math.sin(ang - 0.5), { seed: seed + 1, stroke: color, strokeWidth: 1.8 });
+    rc.line(b[0], b[1], b[0] - L * Math.cos(ang + 0.5), b[1] - L * Math.sin(ang + 0.5), { seed: seed + 2, stroke: color, strokeWidth: 1.8 });
+  }
+
+  var DOODLES = {
+    glove: function (rc, ctx, w, h) {
+      rc.path("M70 150 C40 140, 38 80, 70 60 C95 44, 150 44, 166 70 C180 92, 176 130, 150 146 Z", { seed: 1, fill: "#c51b25", fillStyle: "solid", stroke: "#5a0b10", strokeWidth: 2 });
+      rc.path("M58 92 C42 88, 36 108, 52 118 C62 124, 72 118, 72 108", { seed: 2, fill: "#c51b25", fillStyle: "solid", stroke: "#5a0b10", strokeWidth: 2 });
+      rc.rectangle(78, 146, 74, 30, { seed: 3, fill: "#f2efe6", fillStyle: "solid", stroke: "#5a0b10", strokeWidth: 2 });
+      rc.line(94, 74, 150, 70, { seed: 4, stroke: "#ffd7d7", strokeWidth: 2 });
+    },
+    paddle: function (rc, ctx, w, h) {
+      rc.ellipse(100, 82, 104, 120, { seed: 5, fill: "#285ab8", fillStyle: "solid", stroke: "#12306b", strokeWidth: 2 });
+      rc.rectangle(90, 136, 20, 50, { seed: 6, fill: "#3a2a2a", fillStyle: "solid", stroke: "#1b1111", strokeWidth: 2 });
+      rc.circle(172, 150, 38, { seed: 7, fill: "#f2d23c", fillStyle: "solid", stroke: "#8a6d00", strokeWidth: 2 });
+      [[164, 142], [178, 146], [168, 158], [180, 160]].forEach(function (p, i) { rc.circle(p[0], p[1], 6, { seed: 8 + i, fill: "#8a6d00", fillStyle: "solid", stroke: "#8a6d00" }); });
+    },
+    vinyl: function (rc, ctx, w, h) {
+      rc.circle(115, 100, 160, { seed: 12, fill: "#1b1b1b", fillStyle: "solid", stroke: "#000", strokeWidth: 2 });
+      [130, 104, 80].forEach(function (d, i) { rc.circle(115, 100, d, { seed: 13 + i, stroke: "#4a4a4a", strokeWidth: 1 }); });
+      rc.circle(115, 100, 52, { seed: 17, fill: "#e0782b", fillStyle: "solid", stroke: "#8a3d0a", strokeWidth: 1.5 });
+      rc.circle(115, 100, 6, { seed: 18, fill: "#f2efe6", fillStyle: "solid", stroke: "#f2efe6" });
+    },
+    coffee: function (rc, ctx, w, h) {
+      rc.path("M60 80 L170 80 L160 170 C158 180, 72 180, 70 170 Z", { seed: 20, fill: "#f2efe6", fillStyle: "solid", stroke: "#3a2a2a", strokeWidth: 2 });
+      rc.path("M168 98 C196 98, 196 140, 162 140", { seed: 21, stroke: "#3a2a2a", strokeWidth: 3 });
+      rc.ellipse(115, 82, 106, 18, { seed: 22, fill: "#7a4a24", fillStyle: "solid", stroke: "#3a2a2a", strokeWidth: 1.5 });
+      rc.rectangle(84, 112, 62, 34, { seed: 23, fill: "#c51b25", fillStyle: "hachure", hachureGap: 5, stroke: "#c51b25" });
+      [[96, 26], [116, 18], [136, 26]].forEach(function (p, i) { rc.path("M" + p[0] + " 66 C" + (p[0] - 10) + " 54, " + (p[0] + 10) + " 44, " + p[0] + " " + p[1], { seed: 24 + i, stroke: "#8a8a8a", strokeWidth: 1.6 }); });
+    }
+  };
+  function drawDoodle(cv) {
+    var d = prep(cv, { bg: "#f3efe4" }); d.ctx.save(); DOODLES[cv.getAttribute("data-doodle")](d.rc, d.ctx, d.w, d.h); d.ctx.restore(); cv.__drawn = true;
+  }
+  function drawChart(cv) {
+    var name = cv.getAttribute("data-chart"), theme = THEMES[cv.getAttribute("data-theme") || "paper"];
+    CHARTS[name](cv, theme); cv.__drawn = true;
+  }
+  function visible(el) { return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length); }
+  function drawPending() {
+    if (!window.rough) return;
+    document.querySelectorAll("canvas[data-chart]").forEach(function (cv) { if (!cv.__drawn && visible(cv)) drawChart(cv); });
+    document.querySelectorAll("canvas[data-doodle]").forEach(function (cv) { if (!cv.__drawn && visible(cv)) drawDoodle(cv); });
+  }
+
+  /* ---------------- TV ---------------- */
+  var CHANNELS = [
+    { img: "img/dink-court.jpg", label: "TV showing Dink Engine gameplay", caption: "Dink Engine: a pickleball game with a model that grades every shot.", p: "dink" },
+    { img: "img/fight-camp.jpg", label: "TV showing The Fight Camp app", caption: "The Fight Camp: the fantasy UFC league my scrapers and scoring engine run.", p: "fight" },
+    { chart: "calibration", label: "TV showing the Dink Engine calibration chart", caption: "Dink Engine's model, checked: predicted vs. actual win rate on 31,998 held-out shots.", p: "dink" },
+    { chart: "pipeline", label: "TV showing the YouTube analysis pipeline", caption: "YouTube Trend Analysis: 6,000+ videos, cleaned before a single chart was drawn.", p: "youtube" },
+    { chart: "trading", label: "TV showing the trading bot architecture", caption: "Algorithmic Trading Bot: the system I designed for our team of four.", p: "trading" },
+    { chart: "grid", label: "TV showing the KNN grid search", caption: "KNN Classifier: 120 settings × 5 folds = 600 model fits.", p: "knn" }
+  ];
+  var ch = 0, tvToken = 0;
+  var screen = document.getElementById("tv-screen"), img = document.getElementById("tv-img"), stat = document.getElementById("tv-static");
+  var tvCanvas = document.createElement("canvas"); tvCanvas.setAttribute("width", "400"); tvCanvas.setAttribute("height", "300"); tvCanvas.hidden = true; screen.insertBefore(tvCanvas, stat);
+  var dialNext = document.getElementById("dial-next"), dialPrev = document.getElementById("dial-prev"), note = document.getElementById("tv-note");
+
+  function renderChannel() {
+    var c = CHANNELS[ch];
+    if (c.img) { img.src = c.img; img.hidden = false; tvCanvas.hidden = true; }
+    else { img.hidden = true; tvCanvas.hidden = false; tvCanvas.setAttribute("data-chart", c.chart); tvCanvas.setAttribute("data-theme", "tv"); if (window.rough) CHARTS[c.chart](tvCanvas, THEMES.tv); }
+    document.getElementById("tv-osd").textContent = "CH " + (ch + 1);
+    screen.setAttribute("aria-label", c.label);
+    var cap = document.getElementById("tv-caption");
+    cap.innerHTML = "";
+    cap.appendChild(document.createTextNode(c.caption + " "));
+    var a = document.createElement("a"); a.href = "#" + PROJECT_HASH[c.p]; a.setAttribute("data-go", "work"); a.setAttribute("data-project", c.p); a.textContent = "See the project"; cap.appendChild(a);
+  }
+  function staticBurst(done) {
+    if (reduce) { done(); return; }
+    var token = ++tvToken, r = screen.getBoundingClientRect();
+    stat.width = Math.max(80, Math.round(r.width / 2)); stat.height = Math.max(60, Math.round(r.height / 2)); stat.hidden = false;
+    var sctx = stat.getContext("2d"), t0 = performance.now(), swapped = false;
+    (function frame(t) {
+      if (token !== tvToken) return;
+      var id = sctx.createImageData(stat.width, stat.height), dta = id.data;
+      for (var i = 0; i < dta.length; i += 4) { var v = Math.random() * 255 | 0; dta[i] = dta[i + 1] = dta[i + 2] = v; dta[i + 3] = 255; }
+      sctx.putImageData(id, 0, 0);
+      if (!swapped && t - t0 > 130) { swapped = true; done(); }
+      if (t - t0 < 300) requestAnimationFrame(frame); else stat.hidden = true;
+    })(t0);
+  }
+  function turn(dir) {
+    note.hidden = true;
+    ch = (ch + dir + CHANNELS.length) % CHANNELS.length;
+    dialNext.style.setProperty("--a", (ch * 52) + "deg");
+    dialPrev.style.setProperty("--a", (-40 + ch * 24) + "deg");
+    document.getElementById("live").textContent = "Channel " + (ch + 1) + ". " + CHANNELS[ch].caption;
+    staticBurst(renderChannel);
+  }
+  dialNext.addEventListener("click", function () { turn(1); });
+  dialPrev.addEventListener("click", function () { turn(-1); });
+  document.getElementById("tv-note-x").addEventListener("click", function () { note.hidden = true; dialNext.focus(); });
+
+  /* ---------------- boot ---------------- */
+  fromHash(true);
+  function whenReady() {
+    document.querySelectorAll("canvas[data-chart], canvas[data-doodle]").forEach(function (cv) { cv.__drawn = false; });
+    drawPending(); if (!CHANNELS[ch].img) renderChannel();
+  }
+  var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load('16px "Patrick Hand"'), document.fonts.load('16px "Schoolbell"')]) : Promise.resolve();
+  fontsReady.then(whenReady, whenReady);
+  window.addEventListener("load", whenReady);
+  var resizeT; window.addEventListener("resize", function () { clearTimeout(resizeT); resizeT = setTimeout(drawPending, 150); });
+})();
+</script>
