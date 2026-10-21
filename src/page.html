@@ -70,9 +70,18 @@ button { font: inherit; color: inherit; }
 @keyframes draw { from { stroke-dashoffset: 360; } }
 .vinyl { width: 84px; height: 72px; border: 0; background: none; padding: 0; cursor: pointer; position: relative; flex: none; }
 .vinyl .disc { position: absolute; left: 0; top: 2px; width: 68px; height: 68px; transition: transform 300ms; }
-.vinyl.spinning .disc, .vinyl:hover .disc { animation: spin 1.8s linear infinite; }
-.vinyl .arm { position: absolute; right: 0; top: 0; width: 26px; height: 70px; transform-origin: 70% 8%; transition: transform 400ms; }
-.vinyl.spinning .arm { transform: rotate(14deg); }
+.vinyl.spinning .disc { animation: spin 1.8s linear infinite; }
+.vinyl:hover .disc { transform: rotate(-12deg); }
+.vinyl .arm { position: absolute; right: 0; top: 0; width: 26px; height: 70px; transform-origin: 70% 8%; transform: rotate(-8deg); transition: transform 600ms cubic-bezier(.3,1.3,.5,1); }
+.vinyl.spinning .arm { transform: rotate(16deg); }
+.vinyl .notes { position: absolute; left: 6px; top: -6px; width: 60px; height: 40px; pointer-events: none; }
+.vinyl .notes span { position: absolute; bottom: 0; font-family: var(--font-hand); color: var(--red); font-size: 20px; opacity: 0; }
+.vinyl.spinning .notes span { animation: note 2.6s ease-out infinite; }
+.vinyl.spinning .notes span:nth-child(2) { left: 22px; color: var(--blue); animation-delay: 0.9s; }
+.vinyl.spinning .notes span:nth-child(3) { left: 42px; animation-delay: 1.7s; }
+@keyframes note { 0% { opacity: 0; transform: translate(0, 6px) rotate(-10deg); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(10px, -34px) rotate(14deg); } }
+.vinyl-hint { position: absolute; right: 2px; top: 74px; font-family: var(--font-hand); font-size: 14px; color: var(--blue); white-space: nowrap; pointer-events: none; transform: rotate(-3deg); }
+.vinyl.spinning .vinyl-hint, .vinyl.heard .vinyl-hint { visibility: hidden; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- binder: landscape spread ---------- */
@@ -117,7 +126,7 @@ button { font: inherit; color: inherit; }
 /* page-turn */
 .view { animation: open 380ms ease-out; }
 @keyframes open { from { opacity: 0; transform: translateY(8px); } }
-@media (prefers-reduced-motion: reduce) { .view, .nav a .circle path { animation: none !important; } .vinyl:hover .disc, .vinyl.spinning .disc { animation: none; } html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .view, .nav a .circle path { animation: none !important; } .vinyl.spinning .disc, .vinyl.spinning .notes span { animation: none; } html { scroll-behavior: auto; } }
 
 /* ---------- shared bits ---------- */
 .brush { font-family: var(--font-brush); color: var(--red); font-weight: 400; line-height: 1.02; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
@@ -239,7 +248,7 @@ button { font: inherit; color: inherit; }
   background: linear-gradient(to bottom, #7c7c7c, #e9e9e9 22%, #fbfbfb 34%, #a9a9a9 52%, #e6e6e6 70%, #ffffff 80%, #8a8a8a); box-shadow: 0 0 6px rgba(0,0,0,0.4); }
 .rings-h svg { position: relative; width: 30px; height: 96px; }
 .main-projects h2 { font-size: clamp(36px, 4.4vw, 50px); text-align: center; text-transform: uppercase; }
-.cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; margin-top: 40px; padding-inline: 4%; }
 .card { border: 0; background: none; padding: 0; cursor: pointer; text-align: center; transform: rotate(var(--r, 0deg)); transition: transform 180ms; }
 .card:hover { transform: rotate(0deg) translateY(-4px); }
 .card .shot { display: block; aspect-ratio: 4 / 5; overflow: hidden; box-shadow: 0 8px 14px -6px rgba(0,0,0,0.45); background: #222; }
@@ -364,7 +373,15 @@ main { overflow-x: clip; }
   .logo { font-size: 38px; }
   .nav a { font-size: 25px; }
   .nav { gap: 4px 14px; }
-  .vinyl { display: none; }
+  .vinyl { width: 62px; height: 54px; }
+  .vinyl .disc { width: 50px; height: 50px; }
+  .vinyl .arm { width: 20px; height: 52px; }
+  .vinyl-hint { top: 18px; right: 64px; font-size: 13px; }
+  .top .wrap { position: relative; }
+  .nav-wrap { width: 100%; }
+  .nav { gap: 4px 12px; }
+  .nav a { font-size: 22px; }
+  .vinyl { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 12px; }
   .tv { font-size: 9px; }
   .pair { width: 290px; height: 270px; }
   .pair .polaroid { width: 170px; }
@@ -426,7 +443,9 @@ main { overflow-x: clip; }
           <li><a href="#contact" data-go="contact">Contact<svg class="circle" preserveAspectRatio="none" aria-hidden="true"><use href="#nav-circle"/></svg></a></li>
         </ul>
       </nav>
-      <button class="vinyl" id="vinyl" type="button" aria-label="Spin the record" aria-pressed="false">
+      <button class="vinyl" id="vinyl" type="button" aria-label="Play music" aria-pressed="false" title="Play music">
+        <span class="notes" aria-hidden="true"><span>♪</span><span>♫</span><span>♪</span></span>
+        <span class="vinyl-hint" aria-hidden="true">press play</span>
         <svg class="disc" viewBox="0 0 100 100" aria-hidden="true">
           <circle cx="50" cy="50" r="49" fill="#141414"/>
           <g fill="none" stroke="#2c2c2c" stroke-width="0.8">
@@ -459,8 +478,8 @@ main { overflow-x: clip; }
             <h1 class="brush">Data Science &amp; ML</h1>
             <p class="dots hand">Python • SQL • Machine Learning<br>Data Pipelines • Analytics</p>
             <div class="pair">
-              <figure class="polaroid p1"><a href="#dink-engine" data-go="work" data-project="dink"><img src="img/dink-court-sq.jpg" alt="Dink Engine: a 3D pickleball doubles court with four players" width="640" height="610"></a><figcaption>dink engine</figcaption></figure>
-              <figure class="polaroid p2"><a href="#the-fight-camp" data-go="work" data-project="fight"><img src="img/fight-camp-sq.jpg" alt="The Fight Camp app showing league standings and an upcoming UFC card" width="600" height="600"></a><figcaption>the fight camp</figcaption></figure>
+              <figure class="polaroid p1"><a href="#the-fight-camp" data-go="work" data-project="fight"><img src="img/fight-camp-sq.jpg" alt="The Fight Camp app showing league standings and an upcoming UFC card" width="600" height="600"></a><figcaption>the fight camp</figcaption></figure>
+              <figure class="polaroid p2"><a href="#knn-classifier" data-go="work" data-project="knn"><img src="img/knn-matrix-sq.jpg" alt="Confusion matrix from the Titanic classifier: 115 and 62 correct, 19 and 27 wrong" width="600" height="600"></a><figcaption>knn classifier</figcaption></figure>
             </div>
           </div>
           <div class="spine" aria-hidden="true">
@@ -481,8 +500,8 @@ main { overflow-x: clip; }
               <div class="tv" id="tv">
                 <div class="tv-cab">
                   <div class="tv-bezel">
-                    <div class="tv-screen" id="tv-screen" role="img" aria-label="TV showing Dink Engine">
-                      <img id="tv-img" src="img/dink-court.jpg" alt="" width="800" height="600">
+                    <div class="tv-screen" id="tv-screen" role="img" aria-label="TV showing The Fight Camp app">
+                      <img id="tv-img" src="img/fight-camp-title.jpg" alt="" width="800" height="600">
                       <canvas class="tv-static" id="tv-static" hidden></canvas>
                       <span class="tv-osd" id="tv-osd" aria-hidden="true">CH 1</span>
                     </div>
@@ -504,7 +523,7 @@ main { overflow-x: clip; }
                   <path d="M108 8 L104 50 L114 50 L118 8 Z" fill="#6e452c"/><path d="M152 8 L156 50 L146 50 L142 8 Z" fill="#6e452c"/>
                 </svg>
               </div>
-              <p class="tv-caption hand" id="tv-caption">Dink Engine: a pickleball game with a model that grades every shot. <a href="#dink-engine" data-go="work" data-project="dink">See the project</a></p>
+              <p class="tv-caption hand" id="tv-caption">The Fight Camp: a fantasy UFC league that my scrapers and scoring engine run. <a href="#the-fight-camp" data-go="work" data-project="fight">See the project</a></p>
             </div>
           </div>
         </div>
@@ -523,13 +542,12 @@ main { overflow-x: clip; }
             <div class="about-grid">
               <div class="about-text hand">
                 <p>Hi, I'm Parker. I'm studying computer science with a minor in management at Georgia Southern in Savannah, and I graduate in May 2027.</p>
-                <p>I like projects that answer a real question with real data: a model that grades pickleball shots, a scraper and scoring engine that runs a fantasy UFC league, an analysis of what makes YouTube videos trend.</p>
-                <p>Outside of class I'm usually watching fights, playing pickleball, spinning Tyler, The Creator records or making coffee at Tosa, where I've been a shift lead since 2024.</p>
+                <p>I like projects that answer a real question with real data: a scraper and scoring engine that runs a fantasy UFC league, a classifier that predicts who survived the Titanic, an analysis of what makes YouTube videos trend.</p>
+                <p>Outside of class I'm usually watching fights, playing pickleball or making coffee at Tosa, where I've been a shift lead since 2024.</p>
               </div>
               <div class="film" aria-label="Things I'm into">
                 <figure><canvas data-doodle="glove" width="230" height="200"></canvas><figcaption>UFC</figcaption></figure>
                 <figure><canvas data-doodle="paddle" width="230" height="200"></canvas><figcaption>pickleball</figcaption></figure>
-                <figure><canvas data-doodle="vinyl" width="230" height="200"></canvas><figcaption>vinyl</figcaption></figure>
                 <figure><canvas data-doodle="coffee" width="230" height="200"></canvas><figcaption>coffee</figcaption></figure>
               </div>
             </div>
@@ -562,49 +580,23 @@ main { overflow-x: clip; }
     <div class="wrap">
       <div class="binder portrait">
         <div class="tabs" role="tablist" aria-label="Projects">
-          <button class="tab" role="tab" id="tab-dink" data-project="dink" aria-selected="false" aria-controls="sheet-projects">Dink Engine</button>
           <button class="tab" role="tab" id="tab-fight" data-project="fight" aria-selected="false" aria-controls="sheet-projects">Fight Camp</button>
+          <button class="tab" role="tab" id="tab-knn" data-project="knn" aria-selected="false" aria-controls="sheet-projects">KNN Classifier</button>
           <button class="tab" role="tab" id="tab-youtube" data-project="youtube" aria-selected="false" aria-controls="sheet-projects">YouTube</button>
           <button class="tab" role="tab" id="tab-trading" data-project="trading" aria-selected="false" aria-controls="sheet-projects">Trading Bot</button>
-          <button class="tab" role="tab" id="tab-knn" data-project="knn" aria-selected="false" aria-controls="sheet-projects">KNN</button>
         </div>
         <div class="sheet" id="sheet-projects" role="tabpanel">
           <div class="main-projects" id="main-projects">
             <h2 class="brush">Main projects</h2>
             <div class="cards">
-              <button class="card" type="button" data-project="dink" style="--r:-2deg"><span class="shot"><img src="img/dink-court-sq.jpg" alt="" width="640" height="610"></span><span class="cap">Dink Engine</span></button>
-              <button class="card" type="button" data-project="fight" style="--r:1.5deg"><span class="shot"><img src="img/fight-camp-sq.jpg" alt="" width="600" height="600"></span><span class="cap">The Fight Camp</span></button>
+              <button class="card" type="button" data-project="fight" style="--r:-2deg"><span class="shot"><img src="img/fight-camp-sq.jpg" alt="" width="600" height="600"></span><span class="cap">The Fight Camp</span></button>
+              <button class="card" type="button" data-project="knn" style="--r:1.5deg"><span class="shot"><img src="img/knn-matrix-sq.jpg" alt="" width="600" height="600"></span><span class="cap">KNN Classifier</span></button>
               <button class="card" type="button" data-project="youtube" style="--r:-1deg"><span class="shot"><canvas data-chart="pipeline" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">YouTube Trends</span></button>
               <button class="card" type="button" data-project="trading" style="--r:2deg"><span class="shot"><canvas data-chart="trading" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">Trading Bot</span></button>
-              <button class="card" type="button" data-project="knn" style="--r:-1.5deg"><span class="shot"><canvas data-chart="grid" data-theme="paper" width="320" height="400"></canvas></span><span class="cap">KNN Classifier</span></button>
             </div>
             <p class="work-hint hand">Pick a tab or a photo to read about a project.</p>
           </div>
 
-          <article class="project" id="p-dink" data-detail="dink" hidden>
-            <div>
-              <button class="back" type="button" data-back>← all projects</button>
-              <h2 class="brush">Dink Engine</h2>
-              <p class="kind hand">A pickleball game with a machine-learning model inside</p>
-              <div class="links">
-                <a class="btn-sketch" href="https://parkerdingle.github.io/dink-engine/"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Play it</a>
-                <a class="btn-sketch" href="https://github.com/ParkerDingle/dink-engine"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
-              </div>
-              <p class="lede">A 3D doubles game for practicing shot selection. When the ball comes to you, time slows down and a shot-value model scores every option, grades your choice and drives the AI players.</p>
-              <ul>
-                <li>Trained a LightGBM model on 213,300 shots from 30,000 simulated rallies. Validation splits keep whole rallies together, so the model is never tested on a rally it trained on.</li>
-                <li>Checked calibration instead of stopping at AUC (0.58, expected when one shot only nudges who wins a rally). Predicted and actual win rates stay within 0.04 in every bin.</li>
-                <li>Exported the model to ONNX for the browser and to Luau for a Roblox version, with tests that hold each export to the original.</li>
-                <li>Wrote the pipeline for real match video: YOLO and ByteTrack follow players and ball, and a homography maps pixels to court feet.</li>
-                <li>A GitHub Actions job retrains the model on demand and opens a pull request with the new metrics.</li>
-              </ul>
-              <span class="built">Python · LightGBM · scikit-learn · ONNX · YOLO · OpenCV · TypeScript · Three.js</span>
-            </div>
-            <div class="project-media">
-              <figure class="polaroid wide" style="--r:2deg"><img src="img/dink-title.jpg" alt="Dink Engine start screen listing the trained model: 213,300 shots, AUC 0.58" width="630" height="530"><figcaption>the start screen</figcaption></figure>
-              <figure class="polaroid wide" style="--r:-2deg"><canvas data-chart="calibration" data-theme="paper" width="400" height="300"></canvas><figcaption>calibration on 31,998 held-out shots</figcaption></figure>
-            </div>
-          </article>
 
           <article class="project" id="p-fight" data-detail="fight" hidden>
             <div>
@@ -678,15 +670,18 @@ main { overflow-x: clip; }
               <div class="links">
                 <a class="btn-sketch" href="https://github.com/ParkerDingle/Titanic-ML-Project"><svg class="outline" preserveAspectRatio="none" aria-hidden="true"><use href="#btn-outline"/></svg>Code</a>
               </div>
-              <p class="lede">A complete classification pipeline that predicts Titanic passenger survival with k-nearest neighbors.</p>
+              <p class="lede">A complete classification pipeline that predicts which Titanic passengers survived, using k-nearest neighbors on Kaggle's 891 labelled passengers.</p>
               <ul>
+                <li>79.4% accuracy on 223 held-out passengers, against 60.1% for always guessing "did not survive". The best model uses k = 7 with Manhattan distance and scores 82.9% in cross-validation.</li>
                 <li>Filled missing ages with the median for each passenger class instead of one overall value.</li>
                 <li>Engineered family size, travelling alone, fare quartile and age band features.</li>
-                <li>Scaled the features, tuned 120 settings with 5-fold GridSearchCV, and evaluated with a confusion-matrix heat map.</li>
+                <li>Tuned 120 settings with 5-fold GridSearchCV, then checked the errors in a confusion matrix.</li>
+                <li>Replaced a data file whose labels just copied each passenger's sex, which had produced a meaningless 100%.</li>
               </ul>
               <span class="built">Python · scikit-learn · pandas · NumPy · Seaborn</span>
             </div>
             <div class="project-media">
+              <figure class="polaroid" style="--r:-2deg"><img src="img/knn-matrix-sq.jpg" alt="Confusion matrix: of 134 passengers who died, 115 predicted correctly; of 89 who survived, 62 predicted correctly" width="600" height="600"><figcaption>the model's output on test data</figcaption></figure>
               <figure class="polaroid wide" style="--r:2deg"><canvas data-chart="grid" data-theme="paper" width="400" height="300"></canvas><figcaption>every setting the search tried</figcaption></figure>
             </div>
           </article>
@@ -699,17 +694,17 @@ main { overflow-x: clip; }
             <div>
               <h2 class="brush">Skills</h2>
               <ul>
-                <li>Python &amp; SQL<small>plus Java, C++, C# and TypeScript</small></li>
-                <li>Machine learning<small>scikit-learn, LightGBM, ONNX, cross-validation, calibration</small></li>
+                <li>Python &amp; SQL<small>plus Java, C++ and C#</small></li>
+                <li>Machine learning<small>scikit-learn, k-nearest neighbors, feature engineering, GridSearchCV, cross-validation</small></li>
                 <li>Data pipelines<small>scraping, SQLite, MySQL, PostgreSQL, GitHub Actions</small></li>
                 <li>Analysis &amp; charts<small>pandas, NumPy, Matplotlib, Seaborn</small></li>
-                <li>Software<small>Flask, Git, web apps, Three.js</small></li>
+                <li>Software<small>Flask, Git, JavaScript, web apps</small></li>
                 <li>Controls<small>SCADA systems, field instrumentation, loop testing</small></li>
               </ul>
             </div>
             <figure class="skills-doodle" style="margin:0">
-              <canvas data-chart="calibration" data-theme="marker" width="440" height="330"></canvas>
-              <p class="hand">my favorite chart: a model that's honest about its odds</p>
+              <canvas data-chart="shrinkage" data-theme="marker" width="440" height="330"></canvas>
+              <p class="hand">my favorite chart: how much my UFC projections trust one fighter's record</p>
             </figure>
           </div>
         </div>
@@ -796,7 +791,7 @@ main { overflow-x: clip; }
 
   /* ---------------- views ---------------- */
   var ORDER = ["home", "about", "work", "contact"];
-  var PROJECT_HASH = { dink: "dink-engine", fight: "the-fight-camp", youtube: "youtube-trends", trading: "trading-bot", knn: "knn-classifier" };
+  var PROJECT_HASH = { fight: "the-fight-camp", knn: "knn-classifier", youtube: "youtube-trends", trading: "trading-bot" };
   var HASH_PROJECT = {}; Object.keys(PROJECT_HASH).forEach(function (k) { HASH_PROJECT[PROJECT_HASH[k]] = k; });
   var views = {}; ORDER.forEach(function (v) { views[v] = document.getElementById("view-" + v); });
   var current = null;
@@ -848,9 +843,161 @@ main { overflow-x: clip; }
   }
   window.addEventListener("hashchange", function () { fromHash(false); });
 
-  /* ---------------- vinyl ---------------- */
+  /* ---------------- record player: an original lo-fi loop, synthesized live ---------------- */
+  var LoFi = (function () {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = null, master, keysBus, drumBus, wowDepth, noiseBuf, crackleSrc, timer = null, playing = false;
+    var BPM = 76, STEP = 60 / BPM / 4, SWING = 0.2 * STEP;
+    var step = 0, bar = 0, nextTime = 0;
+    // Dm9 - G13 - Cmaj9 - Am9, voiced around middle C (MIDI numbers)
+    var CHORDS = [
+      { bass: 38, keys: [53, 57, 60, 64] },
+      { bass: 43, keys: [53, 57, 59, 64] },
+      { bass: 36, keys: [52, 55, 59, 62] },
+      { bass: 45, keys: [55, 59, 60, 64] }
+    ];
+    // a sparse four-bar melody on C major pentatonic: [bar, step, midi, length in steps]
+    var MELODY = [[0, 2, 76, 3], [0, 6, 74, 2], [0, 9, 72, 5], [1, 3, 74, 2], [1, 6, 71, 6],
+                  [2, 0, 76, 2], [2, 3, 79, 3], [2, 8, 76, 2], [2, 11, 74, 4], [3, 4, 72, 2], [3, 7, 69, 8]];
+    function hz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+    function env(g, t, peak, attack, decay, sustain, end) {
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + attack);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0001, peak * sustain), t + attack + decay);
+      g.gain.exponentialRampToValueAtTime(0.0001, end);
+    }
+    function wobble(osc) { wowDepth.connect(osc.detune); }
+
+    function epiano(m, t, len, vel) {
+      var f = hz(m), end = t + len + 0.6;
+      var car = ctx.createOscillator(), mod = ctx.createOscillator(), modG = ctx.createGain(), g = ctx.createGain();
+      car.type = "sine"; car.frequency.value = f; mod.type = "sine"; mod.frequency.value = f * 1.0;
+      modG.gain.setValueAtTime(f * 1.6, t); modG.gain.exponentialRampToValueAtTime(f * 0.15, t + 0.5);
+      mod.connect(modG); modG.connect(car.frequency);
+      var tri = ctx.createOscillator(), triG = ctx.createGain(); tri.type = "triangle"; tri.frequency.value = f * 2; triG.gain.value = 0.08;
+      tri.connect(triG); triG.connect(g);
+      wobble(car); wobble(tri);
+      car.connect(g); g.connect(keysBus);
+      env(g, t, vel, 0.008, 1.1, 0.35, end);
+      [car, mod, tri].forEach(function (o) { o.start(t); o.stop(end + 0.05); });
+    }
+    function bell(m, t, len, vel) {
+      var f = hz(m), end = t + len + 0.9;
+      var o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), g2 = ctx.createGain();
+      o.type = "sine"; o.frequency.value = f; o2.type = "sine"; o2.frequency.value = f * 3.01; g2.gain.value = 0.12;
+      o2.connect(g2); g2.connect(g); o.connect(g); g.connect(keysBus); wobble(o); wobble(o2);
+      env(g, t, vel, 0.02, 0.6, 0.4, end);
+      o.start(t); o2.start(t); o.stop(end + 0.05); o2.stop(end + 0.05);
+    }
+    function bass(m, t, len, vel) {
+      var end = t + len;
+      var o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+      o.type = "sine"; o.frequency.value = hz(m); o2.type = "triangle"; o2.frequency.value = hz(m);
+      var g2 = ctx.createGain(); g2.gain.value = 0.25; o2.connect(g2); g2.connect(lp);
+      lp.type = "lowpass"; lp.frequency.value = 380; o.connect(lp); lp.connect(g); g.connect(drumBus);
+      env(g, t, vel, 0.012, 0.25, 0.6, end + 0.08);
+      o.start(t); o2.start(t); o.stop(end + 0.12); o2.stop(end + 0.12);
+    }
+    function kick(t, vel) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.13);
+      g.gain.setValueAtTime(vel, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+      o.connect(g); g.connect(drumBus); o.start(t); o.stop(t + 0.4);
+    }
+    function noiseHit(t, vel, type, freq, q, dur) {
+      var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      src.buffer = noiseBuf; f.type = type; f.frequency.value = freq; f.Q.value = q;
+      g.gain.setValueAtTime(vel, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      src.connect(f); f.connect(g); g.connect(drumBus);
+      src.start(t, Math.random() * 0.5); src.stop(t + dur + 0.02);
+    }
+    function snare(t, vel) {
+      noiseHit(t, vel, "bandpass", 1700, 0.7, 0.2);
+      var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = 185;
+      g.gain.setValueAtTime(vel * 0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+      o.connect(g); g.connect(drumBus); o.start(t); o.stop(t + 0.1);
+    }
+    function hat(t, vel) { noiseHit(t, vel, "highpass", 7200, 0.5, 0.045); }
+
+    function schedule(i, t) {
+      var c = CHORDS[bar % 4];
+      if (i % 2 === 1) t += SWING;
+      if (i === 0) {
+        c.keys.forEach(function (m, k) { epiano(m, t + k * 0.014, STEP * 13, 0.075); });
+        bass(c.bass, t, STEP * 6, 0.5);
+      }
+      if (i === 10) { c.keys.slice(1).forEach(function (m, k) { epiano(m, t + k * 0.012, STEP * 5, 0.045); }); bass(c.bass + 7, t, STEP * 3, 0.38); }
+      if (i === 7) bass(c.bass, t, STEP * 2, 0.32);
+      if (i === 0 || i === 10 || (i === 7 && bar % 2 === 1)) kick(t, i === 7 ? 0.45 : 0.85);
+      if (i === 4 || i === 12) snare(t, 0.32);
+      if (i % 2 === 0) hat(t, i % 4 === 0 ? 0.07 : 0.045); else if (i === 15 && bar % 4 === 3) hat(t, 0.04);
+      MELODY.forEach(function (n) { if (n[0] === bar % 4 && n[1] === i && bar >= 4) bell(n[2], t, STEP * n[3], 0.05); });
+    }
+    function tick() {
+      var ahead = document.hidden ? 1.5 : 0.15;
+      while (nextTime < ctx.currentTime + ahead) {
+        schedule(step, nextTime);
+        nextTime += STEP; step = (step + 1) % 16; if (step === 0) bar++;
+      }
+    }
+    function build() {
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0.0001;
+      var tone = ctx.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 5200;
+      var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3;
+      keysBus = ctx.createGain(); keysBus.gain.value = 1;
+      var keysLp = ctx.createBiquadFilter(); keysLp.type = "lowpass"; keysLp.frequency.value = 2400;
+      keysBus.connect(keysLp); keysLp.connect(master);
+      drumBus = ctx.createGain(); drumBus.gain.value = 0.9; drumBus.connect(master);
+      master.connect(tone); tone.connect(comp); comp.connect(ctx.destination);
+      // tape wobble shared by the melodic voices
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.55; wowDepth = ctx.createGain(); wowDepth.gain.value = 7;
+      lfo.connect(wowDepth); lfo.start();
+      // white noise for drums, and a looping vinyl crackle bed
+      noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+      var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      var cb = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate), cd = cb.getChannelData(0);
+      for (var j = 0; j < cd.length; j++) { cd[j] = (Math.random() * 2 - 1) * 0.035; if (Math.random() < 0.0004) cd[j] += (Math.random() < 0.5 ? -1 : 1) * (0.4 + Math.random() * 0.5); }
+      crackleSrc = ctx.createBufferSource(); crackleSrc.buffer = cb; crackleSrc.loop = true;
+      var cf = ctx.createBiquadFilter(); cf.type = "bandpass"; cf.frequency.value = 2500; cf.Q.value = 0.4;
+      var cg = ctx.createGain(); cg.gain.value = 0.14; crackleSrc.connect(cf); cf.connect(cg); cg.connect(master); crackleSrc.start();
+    }
+    return {
+      supported: !!AC,
+      isPlaying: function () { return playing; },
+      start: function () {
+        if (!AC) return false;
+        if (!ctx) build();
+        if (ctx.state === "suspended") ctx.resume();
+        playing = true; step = 0; bar = 0; nextTime = ctx.currentTime + 0.12;
+        master.gain.cancelScheduledValues(ctx.currentTime);
+        master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), ctx.currentTime);
+        master.gain.exponentialRampToValueAtTime(0.5, ctx.currentTime + 1.2);
+        clearInterval(timer); timer = setInterval(tick, 25); tick();
+        return true;
+      },
+      stop: function () {
+        if (!ctx) return;
+        playing = false;
+        var now = ctx.currentTime;
+        master.gain.cancelScheduledValues(now); master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), now);
+        master.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+        clearInterval(timer); timer = null;
+        setTimeout(function () { if (!playing && ctx.state === "running") ctx.suspend(); }, 800);
+      }
+    };
+  })();
+
   var vinyl = document.getElementById("vinyl");
-  vinyl.addEventListener("click", function () { var on = vinyl.classList.toggle("spinning"); vinyl.setAttribute("aria-pressed", on ? "true" : "false"); });
+  if (!LoFi.supported) { vinyl.title = "Music isn't supported in this browser"; }
+  vinyl.addEventListener("click", function () {
+    var on = !LoFi.isPlaying();
+    if (on) { if (!LoFi.start()) return; } else LoFi.stop();
+    vinyl.classList.toggle("spinning", on); vinyl.classList.add("heard");
+    vinyl.setAttribute("aria-pressed", on ? "true" : "false");
+    vinyl.setAttribute("aria-label", on ? "Stop the music" : "Play music"); vinyl.title = on ? "Stop the music" : "Play music";
+    document.getElementById("live").textContent = on ? "Music playing" : "Music stopped";
+  });
 
   /* ---------------- copy buttons ---------------- */
   document.querySelectorAll(".copy").forEach(function (b) {
@@ -891,22 +1038,6 @@ main { overflow-x: clip; }
   function seedOf(s) { var n = 0; for (var i = 0; i < s.length; i++) n = (n * 31 + s.charCodeAt(i)) % 1000; return n + 1; }
 
   var CHARTS = {
-    calibration: function (cv, T) {
-      var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, o = { seed: 4, roughness: 1.1, stroke: T.ink, strokeWidth: 1.6 };
-      var x0 = w * 0.15, x1 = w * 0.93, y0 = h * 0.12, y1 = h * 0.8, lo = 0.2, hi = 0.7;
-      var sx = function (v) { return x0 + (v - lo) / (hi - lo) * (x1 - x0); }, sy = function (v) { return y1 - (v - lo) / (hi - lo) * (y1 - y0); };
-      rc.line(x0, y1, x1 + 6, y1, o); rc.line(x0, y1, x0, y0 - 6, o);
-      rc.line(sx(lo), sy(lo), sx(hi), sy(hi), { seed: 5, stroke: T.soft, strokeWidth: 1.4, strokeLineDash: [6, 6] });
-      var bins = [[0.29, 0.293, 75], [0.371, 0.361, 4864], [0.465, 0.468, 12109], [0.525, 0.525, 13841], [0.63, 0.667, 1109]];
-      rc.linearPath(bins.map(function (b) { return [sx(b[0]), sy(b[1])]; }), { seed: 6, stroke: T.a, strokeWidth: 3, roughness: 1.4 });
-      var k = w / 400;
-      bins.forEach(function (b, i) { var r = (8 + Math.sqrt(b[2] / 13841) * 16) * k; rc.circle(sx(b[0]), sy(b[1]), r, { seed: 10 + i, fill: T.a, fillStyle: "solid", stroke: T.a, roughness: 1.2 }); });
-      var fs = Math.max(12, 15 * k);
-      [0.2, 0.4, 0.6].forEach(function (v) { label(ctx, v.toFixed(1), sx(v), y1 + fs, T.soft, fs * 0.9, "center"); label(ctx, v.toFixed(1), x0 - 8, sy(v), T.soft, fs * 0.9, "right"); });
-      label(ctx, "predicted win chance", (x0 + x1) / 2, h - fs * 0.7, T.ink, fs, "center");
-      label(ctx, "actual", x0 + 6, y0 - 2, T.ink, fs, "left");
-      label(ctx, "perfect", sx(0.6) + 8, sy(0.58) + 6, T.soft, fs * 0.9, "left");
-    },
     shrinkage: function (cv, T) {
       var d = prep(cv, T), ctx = d.ctx, rc = d.rc, w = d.w, h = d.h, o = { seed: 7, stroke: T.ink, strokeWidth: 1.6 };
       var x0 = w * 0.14, x1 = w * 0.93, y0 = h * 0.14, y1 = h * 0.8, N = 12, k = w / 400, fs = Math.max(12, 15 * k);
@@ -922,7 +1053,7 @@ main { overflow-x: clip; }
       });
       [0, 4, 8, 12].forEach(function (n) { label(ctx, String(n), sx(n), y1 + fs, T.soft, fs * 0.9, "center"); });
       label(ctx, "fights on record", (x0 + x1) / 2, h - fs * 0.7, T.ink, fs, "center");
-      label(ctx, "trust in own record", x0 + 6, y0 - 4, T.ink, fs, "left");
+      label(ctx, "trust in own record", x0 + 6, y0 - 16, T.ink, fs, "left");
       label(ctx, "division average", x1, y1 - 12, T.soft, fs * 0.9, "right");
     },
     pipeline: function (cv, T) {
@@ -998,12 +1129,6 @@ main { overflow-x: clip; }
       rc.circle(172, 150, 38, { seed: 7, fill: "#f2d23c", fillStyle: "solid", stroke: "#8a6d00", strokeWidth: 2 });
       [[164, 142], [178, 146], [168, 158], [180, 160]].forEach(function (p, i) { rc.circle(p[0], p[1], 6, { seed: 8 + i, fill: "#8a6d00", fillStyle: "solid", stroke: "#8a6d00" }); });
     },
-    vinyl: function (rc, ctx, w, h) {
-      rc.circle(115, 100, 160, { seed: 12, fill: "#1b1b1b", fillStyle: "solid", stroke: "#000", strokeWidth: 2 });
-      [130, 104, 80].forEach(function (d, i) { rc.circle(115, 100, d, { seed: 13 + i, stroke: "#4a4a4a", strokeWidth: 1 }); });
-      rc.circle(115, 100, 52, { seed: 17, fill: "#e0782b", fillStyle: "solid", stroke: "#8a3d0a", strokeWidth: 1.5 });
-      rc.circle(115, 100, 6, { seed: 18, fill: "#f2efe6", fillStyle: "solid", stroke: "#f2efe6" });
-    },
     coffee: function (rc, ctx, w, h) {
       rc.path("M60 80 L170 80 L160 170 C158 180, 72 180, 70 170 Z", { seed: 20, fill: "#f2efe6", fillStyle: "solid", stroke: "#3a2a2a", strokeWidth: 2 });
       rc.path("M168 98 C196 98, 196 140, 162 140", { seed: 21, stroke: "#3a2a2a", strokeWidth: 3 });
@@ -1028,12 +1153,13 @@ main { overflow-x: clip; }
 
   /* ---------------- TV ---------------- */
   var CHANNELS = [
-    { img: "img/dink-court.jpg", label: "TV showing Dink Engine gameplay", caption: "Dink Engine: a pickleball game with a model that grades every shot.", p: "dink" },
-    { img: "img/fight-camp.jpg", label: "TV showing The Fight Camp app", caption: "The Fight Camp: the fantasy UFC league my scrapers and scoring engine run.", p: "fight" },
-    { chart: "calibration", label: "TV showing the Dink Engine calibration chart", caption: "Dink Engine's model, checked: predicted vs. actual win rate on 31,998 held-out shots.", p: "dink" },
+    { img: "img/fight-camp-title.jpg", label: "TV showing The Fight Camp app", caption: "The Fight Camp: a fantasy UFC league that my scrapers and scoring engine run.", p: "fight" },
+    { img: "img/fight-camp.jpg", label: "TV showing The Fight Camp standings", caption: "The Fight Camp standings, updated automatically after every card.", p: "fight" },
+    { chart: "shrinkage", label: "TV showing the Fight Camp projection chart", caption: "How much a Fight Camp projection trusts a fighter's own record: a third after one fight, three-quarters after six.", p: "fight" },
+    { img: "img/knn-matrix.jpg", label: "TV showing the KNN confusion matrix", caption: "KNN Classifier: 79.4% accuracy on 223 passengers it never saw in training.", p: "knn" },
     { chart: "pipeline", label: "TV showing the YouTube analysis pipeline", caption: "YouTube Trend Analysis: 6,000+ videos, cleaned before a single chart was drawn.", p: "youtube" },
     { chart: "trading", label: "TV showing the trading bot architecture", caption: "Algorithmic Trading Bot: the system I designed for our team of four.", p: "trading" },
-    { chart: "grid", label: "TV showing the KNN grid search", caption: "KNN Classifier: 120 settings × 5 folds = 600 model fits.", p: "knn" }
+    { chart: "grid", label: "TV showing the KNN grid search", caption: "KNN Classifier: 120 settings × 5 folds = 600 model fits to find the best one.", p: "knn" }
   ];
   var ch = 0, tvToken = 0;
   var screen = document.getElementById("tv-screen"), img = document.getElementById("tv-img"), stat = document.getElementById("tv-static");
